@@ -1,7 +1,7 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController {
+class AlbumListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension AlbumListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albums.count
@@ -35,7 +35,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension AlbumListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
