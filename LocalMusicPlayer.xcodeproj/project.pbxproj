@@ -54,14 +54,30 @@
 		69056AE61FE3C25200370BB6 /* LocalMusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				69056AE71FE3C25200370BB6 /* AppDelegate.swift */,
-				69056AE91FE3C25200370BB6 /* ViewController.swift */,
-				69056AEB1FE3C25200370BB6 /* Main.storyboard */,
-				69056AEE1FE3C25200370BB6 /* Assets.xcassets */,
-				69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */,
-				69056AF31FE3C25200370BB6 /* Info.plist */,
+				69D855F51FF32DAB0005C298 /* Resources */,
+				69D855F41FF32D8F0005C298 /* Sources */,
 			);
 			path = LocalMusicPlayer;
+			sourceTree = "<group>";
+		};
+		69D855F41FF32D8F0005C298 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				69056AE71FE3C25200370BB6 /* AppDelegate.swift */,
+				69056AEB1FE3C25200370BB6 /* Main.storyboard */,
+				69056AE91FE3C25200370BB6 /* ViewController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		69D855F51FF32DAB0005C298 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				69056AEE1FE3C25200370BB6 /* Assets.xcassets */,
+				69056AF31FE3C25200370BB6 /* Info.plist */,
+				69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +166,7 @@
 				69056AEC1FE3C25200370BB6 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */ = {
@@ -158,6 +175,7 @@
 				69056AF11FE3C25200370BB6 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -277,7 +295,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6X7NUD7W6P;
-				INFOPLIST_FILE = LocalMusicPlayer/Info.plist;
+				INFOPLIST_FILE = LocalMusicPlayer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mixin.LocalMusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -294,7 +312,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6X7NUD7W6P;
-				INFOPLIST_FILE = LocalMusicPlayer/Info.plist;
+				INFOPLIST_FILE = LocalMusicPlayer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mixin.LocalMusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
