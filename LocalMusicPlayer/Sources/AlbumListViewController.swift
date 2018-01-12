@@ -39,5 +39,9 @@ extension AlbumListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let vc = UIStoryboard(name: "AlbumDetail", bundle: nil).instantiateViewController(withIdentifier: "AlbumDetailViewController") as! AlbumDetailViewController
+        vc.album = albums[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
