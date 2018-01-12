@@ -5,10 +5,10 @@ class TopViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     private let menus = [
-        "アルバム",
-        "トラック",
-        "アーティスト",
-        "プレイリスト",
+        R.string.localizable.topMenuAlbum(),
+        R.string.localizable.topMenuTrack(),
+        R.string.localizable.topMenuArtist(),
+        R.string.localizable.topMenuPlaylist(),
     ]
 
     override func viewDidLoad() {
