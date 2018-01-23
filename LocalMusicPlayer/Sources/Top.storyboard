@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,11 +19,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3qe-6C-uaU">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="3qe-6C-uaU">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BEN-vR-lr6">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="605.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="ySA-uu-Uad" style="IBUITableViewCellStyleDefault" id="ZCc-qx-r1i">
@@ -49,7 +50,15 @@
                                             <outlet property="delegate" destination="Ncu-Zh-CEY" id="Lrt-cS-eSq"/>
                                         </connections>
                                     </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="80a-XZ-F4U">
+                                        <rect key="frame" x="0.0" y="606.5" width="375" height="60.5"/>
+                                        <color key="backgroundColor" red="0.58105844259999995" green="0.12855249639999999" blue="0.57453137639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="80a-XZ-F4U" firstAttribute="height" secondItem="BEN-vR-lr6" secondAttribute="height" multiplier="0.1" id="Fq0-Xd-K90"/>
+                                    <constraint firstItem="80a-XZ-F4U" firstAttribute="top" secondItem="BEN-vR-lr6" secondAttribute="bottom" constant="1" id="yRz-bq-FXf"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -63,6 +72,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="LocalMusicPlayer" id="z73-br-H7z"/>
                     <connections>
+                        <outlet property="footerView" destination="80a-XZ-F4U" id="JCA-64-vU9"/>
+                        <outlet property="stackView" destination="3qe-6C-uaU" id="EER-IH-QzG"/>
                         <outlet property="tableView" destination="BEN-vR-lr6" id="LLN-GD-sk8"/>
                     </connections>
                 </viewController>
