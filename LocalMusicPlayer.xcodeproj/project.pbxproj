@@ -17,6 +17,8 @@
 		69D855F71FF3B85A0005C298 /* Top.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D855F61FF3B85A0005C298 /* Top.storyboard */; };
 		69D855F91FF86CDA0005C298 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D855F81FF86CDA0005C298 /* TopViewController.swift */; };
 		69D855FB1FFDA5380005C298 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69D855FA1FFDA5380005C298 /* Localizable.strings */; };
+		69FA7B9A20177A8C00E0BA46 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FA7B9920177A8C00E0BA46 /* NavigationController.swift */; };
+		69FA7B9D20177CC600E0BA46 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FA7B9C20177CC600E0BA46 /* UIViewController.swift */; };
 		69FF9E6A1FFDF97000EF1CF3 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FF9E691FFDF97000EF1CF3 /* R.generated.swift */; };
 		9DD8B46D70202577694E2806 /* Pods_LocalMusicPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD375F2E13B57B88EE5378 /* Pods_LocalMusicPlayer.framework */; };
 /* End PBXBuildFile section */
@@ -35,6 +37,8 @@
 		69D855F61FF3B85A0005C298 /* Top.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Top.storyboard; sourceTree = "<group>"; };
 		69D855F81FF86CDA0005C298 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		69D855FA1FFDA5380005C298 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		69FA7B9920177A8C00E0BA46 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		69FA7B9C20177CC600E0BA46 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		69FF9E691FFDF97000EF1CF3 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		71DD375F2E13B57B88EE5378 /* Pods_LocalMusicPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocalMusicPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		901B57FA0B7BED784AD805DA /* Pods-LocalMusicPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalMusicPlayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocalMusicPlayer/Pods-LocalMusicPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 		69D855F41FF32D8F0005C298 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				69FA7B9B20177C9000E0BA46 /* extensions */,
 				69056AE71FE3C25200370BB6 /* AppDelegate.swift */,
 				696E385620074EA300783C4D /* AlbumDetail.storyboard */,
 				696E385820075BAA00783C4D /* AlbumDetailViewController.swift */,
@@ -98,6 +103,7 @@
 				69056AE91FE3C25200370BB6 /* AlbumListViewController.swift */,
 				69D855F61FF3B85A0005C298 /* Top.storyboard */,
 				69D855F81FF86CDA0005C298 /* TopViewController.swift */,
+				69FA7B9920177A8C00E0BA46 /* NavigationController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -112,6 +118,14 @@
 				69FF9E691FFDF97000EF1CF3 /* R.generated.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		69FA7B9B20177C9000E0BA46 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				69FA7B9C20177CC600E0BA46 /* UIViewController.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		E14DB2C871FA77FD03B012D9 /* Frameworks */ = {
@@ -262,7 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69FA7B9D20177CC600E0BA46 /* UIViewController.swift in Sources */,
 				69D855F91FF86CDA0005C298 /* TopViewController.swift in Sources */,
+				69FA7B9A20177A8C00E0BA46 /* NavigationController.swift in Sources */,
 				69056AEA1FE3C25200370BB6 /* AlbumListViewController.swift in Sources */,
 				696E385920075BAA00783C4D /* AlbumDetailViewController.swift in Sources */,
 				69056AE81FE3C25200370BB6 /* AppDelegate.swift in Sources */,
