@@ -13,6 +13,16 @@ class AlbumListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        guard let miniPlayerView = navCon?.miniPlayerView else { return }
+
+        let bottomInset = miniPlayerView.frame.size.height - view.safeAreaInsets.bottom
+        tableView.contentInset.bottom = bottomInset
+        tableView.scrollIndicatorInsets.bottom = bottomInset
+    }
 }
 
 extension AlbumListViewController: UITableViewDataSource {

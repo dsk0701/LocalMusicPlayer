@@ -13,6 +13,16 @@ class AlbumDetailViewController: UIViewController {
 
         title = album.representativeItem?.albumTitle
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        guard let miniPlayerView = navCon?.miniPlayerView else { return }
+
+        let bottomInset = miniPlayerView.frame.size.height - view.safeAreaInsets.bottom
+        tableView.contentInset.bottom = bottomInset
+        tableView.scrollIndicatorInsets.bottom = bottomInset
+    }
 }
 
 extension AlbumDetailViewController: UITableViewDataSource {
