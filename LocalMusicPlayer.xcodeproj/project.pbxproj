@@ -68,10 +68,10 @@
 		69056ADB1FE3C25200370BB6 = {
 			isa = PBXGroup;
 			children = (
-				69056AE61FE3C25200370BB6 /* LocalMusicPlayer */,
-				69056AE51FE3C25200370BB6 /* Products */,
-				12543F7D636E7E26DC6FE7E7 /* Pods */,
 				E14DB2C871FA77FD03B012D9 /* Frameworks */,
+				69056AE61FE3C25200370BB6 /* LocalMusicPlayer */,
+				12543F7D636E7E26DC6FE7E7 /* Pods */,
+				69056AE51FE3C25200370BB6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,15 +95,15 @@
 		69D855F41FF32D8F0005C298 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				69FA7B9B20177C9000E0BA46 /* extensions */,
-				69056AE71FE3C25200370BB6 /* AppDelegate.swift */,
+				69FA7B9B20177C9000E0BA46 /* Extensions */,
 				696E385620074EA300783C4D /* AlbumDetail.storyboard */,
 				696E385820075BAA00783C4D /* AlbumDetailViewController.swift */,
 				69056AEB1FE3C25200370BB6 /* AlbumList.storyboard */,
 				69056AE91FE3C25200370BB6 /* AlbumListViewController.swift */,
+				69056AE71FE3C25200370BB6 /* AppDelegate.swift */,
+				69FA7B9920177A8C00E0BA46 /* NavigationController.swift */,
 				69D855F61FF3B85A0005C298 /* Top.storyboard */,
 				69D855F81FF86CDA0005C298 /* TopViewController.swift */,
-				69FA7B9920177A8C00E0BA46 /* NavigationController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -120,12 +120,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		69FA7B9B20177C9000E0BA46 /* extensions */ = {
+		69FA7B9B20177C9000E0BA46 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				69FA7B9C20177CC600E0BA46 /* UIViewController.swift */,
 			);
-			path = extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E14DB2C871FA77FD03B012D9 /* Frameworks */ = {
