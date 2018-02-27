@@ -2,10 +2,10 @@ import UIKit
 
 class NavigationController: UINavigationController {
 
-    lazy var miniPlayerView: UIButton = {
-        let view = UIButton()
-        view.backgroundColor = .purple
-        view.addTarget(self, action: #selector(btnDidTap), for: .touchUpInside)
+    lazy var miniPlayerView: MiniPlayerView = {
+        let view = MiniPlayerView()
+        // TODO: Add Action.
+        // view.addTarget(self, action: #selector(btnDidTap), for: .touchUpInside)
         return view
     }()
 

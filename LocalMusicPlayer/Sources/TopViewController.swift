@@ -4,16 +4,14 @@ class TopViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    /*
     private let menus = [
         R.string.localizable.topMenuAlbum(),
         R.string.localizable.topMenuTrack(),
         R.string.localizable.topMenuArtist(),
         R.string.localizable.topMenuPlaylist(),
     ]
-    */
 
-    private let menus = (0..<100).map { String($0) }
+    // private let menus = (0..<100).map { String($0) }
 
     override func viewDidLoad() {
         super.viewDidLoad()

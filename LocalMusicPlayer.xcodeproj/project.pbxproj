@@ -10,8 +10,10 @@
 		69056AE81FE3C25200370BB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69056AE71FE3C25200370BB6 /* AppDelegate.swift */; };
 		69056AEA1FE3C25200370BB6 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69056AE91FE3C25200370BB6 /* AlbumListViewController.swift */; };
 		69056AED1FE3C25200370BB6 /* AlbumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69056AEB1FE3C25200370BB6 /* AlbumList.storyboard */; };
-		69056AEF1FE3C25200370BB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69056AEE1FE3C25200370BB6 /* Assets.xcassets */; };
 		69056AF21FE3C25200370BB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */; };
+		692B08D7203D6202001E6474 /* MiniPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 692B08D6203D6202001E6474 /* MiniPlayerView.xib */; };
+		692B08D9203E3CC3001E6474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692B08D8203E3CC3001E6474 /* Assets.xcassets */; };
+		692B08DB2044E63C001E6474 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B08DA2044E63C001E6474 /* MiniPlayerView.swift */; };
 		696E385720074EA300783C4D /* AlbumDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 696E385620074EA300783C4D /* AlbumDetail.storyboard */; };
 		696E385920075BAA00783C4D /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696E385820075BAA00783C4D /* AlbumDetailViewController.swift */; };
 		69D855F71FF3B85A0005C298 /* Top.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D855F61FF3B85A0005C298 /* Top.storyboard */; };
@@ -29,9 +31,11 @@
 		69056AE71FE3C25200370BB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69056AE91FE3C25200370BB6 /* AlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewController.swift; sourceTree = "<group>"; };
 		69056AEC1FE3C25200370BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AlbumList.storyboard; sourceTree = "<group>"; };
-		69056AEE1FE3C25200370BB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69056AF11FE3C25200370BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69056AF31FE3C25200370BB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		692B08D6203D6202001E6474 /* MiniPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiniPlayerView.xib; sourceTree = "<group>"; };
+		692B08D8203E3CC3001E6474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		692B08DA2044E63C001E6474 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		696E385620074EA300783C4D /* AlbumDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlbumDetail.storyboard; sourceTree = "<group>"; };
 		696E385820075BAA00783C4D /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 		69D855F61FF3B85A0005C298 /* Top.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Top.storyboard; sourceTree = "<group>"; };
@@ -92,9 +96,19 @@
 			path = LocalMusicPlayer;
 			sourceTree = "<group>";
 		};
+		692B08D5203D61F4001E6474 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				692B08D6203D6202001E6474 /* MiniPlayerView.xib */,
+				692B08DA2044E63C001E6474 /* MiniPlayerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		69D855F41FF32D8F0005C298 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				692B08D5203D61F4001E6474 /* Views */,
 				69FA7B9B20177C9000E0BA46 /* Extensions */,
 				696E385620074EA300783C4D /* AlbumDetail.storyboard */,
 				696E385820075BAA00783C4D /* AlbumDetailViewController.swift */,
@@ -111,7 +125,7 @@
 		69D855F51FF32DAB0005C298 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				69056AEE1FE3C25200370BB6 /* Assets.xcassets */,
+				692B08D8203E3CC3001E6474 /* Assets.xcassets */,
 				69056AF31FE3C25200370BB6 /* Info.plist */,
 				69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */,
 				69D855FA1FFDA5380005C298 /* Localizable.strings */,
@@ -198,11 +212,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				692B08D7203D6202001E6474 /* MiniPlayerView.xib in Resources */,
 				69D855FB1FFDA5380005C298 /* Localizable.strings in Resources */,
 				69D855F71FF3B85A0005C298 /* Top.storyboard in Resources */,
 				69056AF21FE3C25200370BB6 /* LaunchScreen.storyboard in Resources */,
+				692B08D9203E3CC3001E6474 /* Assets.xcassets in Resources */,
 				696E385720074EA300783C4D /* AlbumDetail.storyboard in Resources */,
-				69056AEF1FE3C25200370BB6 /* Assets.xcassets in Resources */,
 				69056AED1FE3C25200370BB6 /* AlbumList.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +295,7 @@
 				69D855F91FF86CDA0005C298 /* TopViewController.swift in Sources */,
 				69FA7B9A20177A8C00E0BA46 /* NavigationController.swift in Sources */,
 				69056AEA1FE3C25200370BB6 /* AlbumListViewController.swift in Sources */,
+				692B08DB2044E63C001E6474 /* MiniPlayerView.swift in Sources */,
 				696E385920075BAA00783C4D /* AlbumDetailViewController.swift in Sources */,
 				69056AE81FE3C25200370BB6 /* AppDelegate.swift in Sources */,
 				69FF9E6A1FFDF97000EF1CF3 /* R.generated.swift in Sources */,
