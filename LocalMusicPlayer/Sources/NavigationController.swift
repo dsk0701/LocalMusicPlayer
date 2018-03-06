@@ -2,6 +2,8 @@ import UIKit
 
 class NavigationController: UINavigationController {
 
+    let miniPlayerHeight = CGFloat(60)
+
     lazy var miniPlayerView: MiniPlayerView = {
         let view = MiniPlayerView()
         // TODO: Add Action.
@@ -24,9 +26,9 @@ class NavigationController: UINavigationController {
 
         miniPlayerView.frame = CGRect(
             x: view.frame.origin.x,
-            y: view.frame.size.height - 50,
+            y: view.frame.size.height - miniPlayerHeight,
             width: view.frame.size.width,
-            height: 50
+            height: miniPlayerHeight
         )
     }
 }
