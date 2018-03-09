@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,101 +17,62 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AlbumImage" translatesAutoresizingMaskIntoConstraints="NO" id="B3O-vP-K51">
-                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="++ HIDDEN AFFAIRS | mixtape 1748 ++" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLI-oL-OXJ">
-                    <rect key="frame" x="68" y="0.0" width="245" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pd5-dt-X0F">
-                    <rect key="frame" x="329" y="12" width="32" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="Play"/>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DJ CHIRS MARINA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIw-z5-jSF">
-                    <rect key="frame" x="68" y="30" width="245" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nLB-Qm-vc1">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AlbumImage" translatesAutoresizingMaskIntoConstraints="NO" id="B3O-vP-K51">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="B3O-vP-K51" secondAttribute="height" multiplier="1:1" id="CIG-ND-l8A"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LZT-ce-q6C">
+                            <rect key="frame" x="70" y="13" width="240" height="34.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="++ HIDDEN AFFAIRS | mixtape 1748 ++" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLI-oL-OXJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ CHIRS MARINA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIw-z5-jSF">
+                                    <rect key="frame" x="0.0" y="21" width="240" height="13.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pd5-dt-X0F">
+                            <rect key="frame" x="320" y="0.0" width="55" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="55" id="lh9-x0-iaB"/>
+                            </constraints>
+                            <state key="normal" image="Play"/>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="B3O-vP-K51" secondAttribute="bottom" id="Cdb-rt-VuP"/>
+                        <constraint firstItem="B3O-vP-K51" firstAttribute="leading" secondItem="nLB-Qm-vc1" secondAttribute="leading" id="KJ5-66-qHv"/>
+                        <constraint firstItem="B3O-vP-K51" firstAttribute="top" secondItem="nLB-Qm-vc1" secondAttribute="top" id="TGw-UV-dlM"/>
+                        <constraint firstAttribute="trailing" secondItem="pd5-dt-X0F" secondAttribute="trailing" id="XiA-gV-XRI"/>
+                        <constraint firstAttribute="bottom" secondItem="pd5-dt-X0F" secondAttribute="bottom" id="cXH-MQ-8Fl"/>
+                        <constraint firstItem="pd5-dt-X0F" firstAttribute="top" secondItem="nLB-Qm-vc1" secondAttribute="top" id="hIU-ln-J0R"/>
+                    </constraints>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="nLB-Qm-vc1" secondAttribute="trailing" id="8A2-qQ-3AS"/>
+                <constraint firstItem="nLB-Qm-vc1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mRV-ua-Je9"/>
+                <constraint firstItem="nLB-Qm-vc1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="q5m-PY-2LJ"/>
+                <constraint firstAttribute="bottom" secondItem="nLB-Qm-vc1" secondAttribute="bottom" id="tLK-ed-EwR"/>
+            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="2.5" y="-250"/>
-        </view>
-        <view contentMode="scaleToFill" id="CH6-yM-xZJ">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOE-2p-FxZ">
-                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AlbumImage" translatesAutoresizingMaskIntoConstraints="NO" id="rwO-ZH-2Nl">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="80" id="Wph-My-kO6"/>
-                    </constraints>
-                </view>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vOd-y2-jw9">
-                    <rect key="frame" x="80" y="0.0" width="265" height="80"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="++ HIDDEN AFFAIRS | mixtape 1748 ++" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gyw-5w-qQH">
-                            <rect key="frame" x="0.0" y="0.0" width="253" height="47.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ CHIRS MARINA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNL-PK-gcT">
-                            <rect key="frame" x="0.0" y="32.5" width="105" height="47.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vSD-6l-9NN">
-                    <rect key="frame" x="345" y="0.0" width="30" height="80"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="cSv-dk-x2Q"/>
-                    </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w16-2z-N0R">
-                    <rect key="frame" x="23" y="22" width="32" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="Play"/>
-                </button>
-            </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="YOE-2p-FxZ" firstAttribute="leading" secondItem="tj4-PX-y2a" secondAttribute="leading" id="51d-ZH-aWp"/>
-                <constraint firstItem="vSD-6l-9NN" firstAttribute="trailing" secondItem="tj4-PX-y2a" secondAttribute="trailing" id="FhP-Xi-mVQ"/>
-                <constraint firstItem="tj4-PX-y2a" firstAttribute="bottom" secondItem="vOd-y2-jw9" secondAttribute="bottom" id="HgZ-wb-0Iu"/>
-                <constraint firstItem="YOE-2p-FxZ" firstAttribute="bottom" secondItem="tj4-PX-y2a" secondAttribute="bottom" id="Ocr-ib-PPj"/>
-                <constraint firstItem="vOd-y2-jw9" firstAttribute="leading" secondItem="YOE-2p-FxZ" secondAttribute="trailing" id="SBT-1m-QS4"/>
-                <constraint firstItem="vSD-6l-9NN" firstAttribute="leading" secondItem="vOd-y2-jw9" secondAttribute="trailing" id="bUw-cT-eCu"/>
-                <constraint firstItem="vSD-6l-9NN" firstAttribute="top" secondItem="tj4-PX-y2a" secondAttribute="top" id="hdI-U5-Isg"/>
-                <constraint firstItem="vSD-6l-9NN" firstAttribute="bottom" secondItem="tj4-PX-y2a" secondAttribute="bottom" id="rO1-iR-TjK"/>
-                <constraint firstItem="vOd-y2-jw9" firstAttribute="top" secondItem="tj4-PX-y2a" secondAttribute="top" id="uHb-Bo-DAa"/>
-                <constraint firstItem="YOE-2p-FxZ" firstAttribute="top" secondItem="tj4-PX-y2a" secondAttribute="top" id="wFh-9h-2H8"/>
-            </constraints>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="tj4-PX-y2a"/>
-            <point key="canvasLocation" x="2.5" y="-51"/>
         </view>
     </objects>
     <resources>
