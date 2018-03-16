@@ -51,15 +51,7 @@ extension AlbumDetailViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let songURL = album.items[indexPath.row].assetURL else { return }
-
-        do {
-            player = try AVAudioPlayer(contentsOf: songURL)
-            player.delegate = self
-            player.play()
-        } catch {
-            print(error)
-        }
+        app.player.play(item: album.items[indexPath.row])
     }
 }
 

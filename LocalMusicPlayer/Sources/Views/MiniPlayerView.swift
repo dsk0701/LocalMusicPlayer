@@ -19,15 +19,15 @@ class MiniPlayerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        setUpNib()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        setUpNib()
     }
 
-    private func commonInit() {
+    private func setUpNib() {
         let bundle = Bundle(for: type(of: self))
         let view = UINib(nibName: "MiniPlayerView", bundle: bundle).instantiate(withOwner: self, options: nil).first! as! UIView
 

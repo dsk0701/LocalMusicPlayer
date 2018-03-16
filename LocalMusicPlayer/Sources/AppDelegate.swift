@@ -1,21 +1,16 @@
-//
-//  AppDelegate.swift
-//  LocalMusicPlayer
-//
-//  Created by Daisuke Shiraishi on 2017/12/15.
-//  Copyright © 2017年 Daisuke Shiraishi. All rights reserved.
-//
-
 import UIKit
+
+var app: AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let player = Player()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         return true
     }
 
