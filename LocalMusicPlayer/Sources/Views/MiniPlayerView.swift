@@ -7,24 +7,23 @@ class MiniPlayerView: UIView {
     @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var playOrStopBtn: UIButton!
 
-    private var state = State.stop {
-        didSet {
-            didUpdated(state: state)
-        }
-    }
-
-    enum State {
-        case stop, playing
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpNib()
+        commonInit()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    deinit {
+        app.player.remove(observer: self)
+    }
+
+    private func commonInit() {
         setUpNib()
+        app.player.add(observer: self)
     }
 
     private func setUpNib() {
@@ -35,23 +34,23 @@ class MiniPlayerView: UIView {
         addSubview(view)
     }
 
-    @IBAction func playOrStopBtnTapped(_ sender: UIButton) {
-        switch state {
-        case .stop:
-            state = .playing
-        case .playing:
-            state = .stop
-        }
+    @IBAction func playOrResumeBtnTapped(_ sender: UIButton) {
+        app.player.resumeOrPause()
     }
+}
 
-    private func didUpdated(state: State) {
+extension MiniPlayerView: PlayerObserver {
+    func stateDidChanged(state: Player.State) {
+        Log.d("state: \(state)")
+
         var image: UIImage?
         switch state {
-        case .stop:
+        case .stop, .pause:
             image = R.image.play()
         case .playing:
             image = R.image.pause()
         }
+
         playOrStopBtn.setImage(image, for: UIControlState.normal)
     }
 }

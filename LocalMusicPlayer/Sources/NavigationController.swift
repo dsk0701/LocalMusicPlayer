@@ -12,7 +12,7 @@ class NavigationController: UINavigationController {
     }()
 
     @objc func btnDidTap() {
-        print("btnDidTap")
+        Log.d("btnDidTap")
     }
 
     override func viewDidLoad() {

@@ -6,7 +6,6 @@ class AlbumDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var album: MPMediaItemCollection!
-    private var player: AVAudioPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +52,4 @@ extension AlbumDetailViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         app.player.play(item: album.items[indexPath.row])
     }
-}
-
-extension AlbumDetailViewController: AVAudioPlayerDelegate {
 }
