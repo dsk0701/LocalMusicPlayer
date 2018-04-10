@@ -1,4 +1,5 @@
 import MediaPlayer
+import AVFoundation
 
 protocol PlayerObserver: class {
     func stateDidChanged(state: Player.State)
@@ -28,6 +29,13 @@ class Player: NSObject {
 
     override init() {
         super.init()
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            Log.e(error)
+        }
 
         guard let song = songs.first, let songURL = song.assetURL else { return }
 
