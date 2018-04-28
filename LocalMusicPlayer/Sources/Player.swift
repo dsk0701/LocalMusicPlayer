@@ -51,21 +51,6 @@ class Player: NSObject {
         }
     }
 
-    func initRemoteCommand() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.playCommand.addTarget(self, action: #selector(resume))
-        commandCenter.pauseCommand.addTarget(self, action: #selector(pause))
-        commandCenter.stopCommand.addTarget(self, action: #selector(stop))
-        commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(resumeOrPause))
-        // NOTE: リモコンにはひとまずスキップより曲送りを表示
-        commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
-        commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
-        // commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 10)]
-        // commandCenter.skipForwardCommand.addTarget(self, action: #selector(skipForward(event:)))
-        // commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 10)]
-        // commandCenter.skipBackwardCommand.addTarget(self, action: #selector(skipBackward))
-    }
-
     func add(observer: PlayerObserver) {
         guard !observers.contains(where: { $0 === observer }) else { return }
         observers.append(observer)
@@ -150,11 +135,27 @@ class Player: NSObject {
         songs.append(item)
     }
 
+    private func initRemoteCommand() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.addTarget(self, action: #selector(resume))
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pause))
+        commandCenter.stopCommand.addTarget(self, action: #selector(stop))
+        commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(resumeOrPause))
+        // NOTE: リモコンにはひとまずスキップより曲送りを表示
+        commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
+        commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
+        // commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 10)]
+        // commandCenter.skipForwardCommand.addTarget(self, action: #selector(skipForward(event:)))
+        // commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 10)]
+        // commandCenter.skipBackwardCommand.addTarget(self, action: #selector(skipBackward))
+    }
+
     private func setNowPlayingInfo(by item: MPMediaItem) {
         var nowPlayingInfo = [String: Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = item.title
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = item.albumTitle
         nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player.duration
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
