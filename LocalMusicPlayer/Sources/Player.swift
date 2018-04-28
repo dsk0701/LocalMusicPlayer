@@ -30,6 +30,8 @@ class Player: NSObject {
     override init() {
         super.init()
 
+        initRemoteCommand()
+
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
@@ -37,6 +39,7 @@ class Player: NSObject {
             Log.e(error)
         }
 
+        // TODO: 再生中の曲を再生したり
         guard let song = songs.first, let songURL = song.assetURL else { return }
 
         do {
@@ -46,6 +49,21 @@ class Player: NSObject {
         } catch {
             Log.e(error)
         }
+    }
+
+    func initRemoteCommand() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.addTarget(self, action: #selector(resume))
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pause))
+        commandCenter.stopCommand.addTarget(self, action: #selector(stop))
+        commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(resumeOrPause))
+        // NOTE: リモコンにはひとまずスキップより曲送りを表示
+        commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
+        commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
+        // commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 10)]
+        // commandCenter.skipForwardCommand.addTarget(self, action: #selector(skipForward(event:)))
+        // commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 10)]
+        // commandCenter.skipBackwardCommand.addTarget(self, action: #selector(skipBackward))
     }
 
     func add(observer: PlayerObserver) {
@@ -65,15 +83,18 @@ class Player: NSObject {
         do {
             player = try AVAudioPlayer(contentsOf: songURL)
             player.delegate = self
+            player.prepareToPlay()
             player.play()
+
             songs.append(item)
+            setNowPlayingInfo(by: item)
             state = .playing
         } catch {
             Log.e(error)
         }
     }
 
-    func resumeOrPause() {
+    @objc func resumeOrPause() {
         switch state {
         case .playing:
             pause()
@@ -84,25 +105,57 @@ class Player: NSObject {
         }
     }
 
-    func resume() {
+    @objc func resume() {
         guard player != nil else { return }
 
         player.play()
         state = .playing
     }
 
-    func pause() {
+    @objc func pause() {
         player.pause()
         state = .pause
     }
 
-    func stop() {
+    @objc func stop() {
         player.stop()
         state = .stop
     }
 
+    @objc func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        // TODO:
+        Log.d(event.command)
+        return .success
+    }
+
+    @objc func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        // TODO:
+        Log.d(event.command)
+        return .success
+    }
+
+    @objc func skipForward(event: MPSkipIntervalCommandEvent) -> MPRemoteCommandHandlerStatus {
+        // TODO:
+        Log.d(event.interval)
+        return .success
+    }
+
+    @objc func skipBackward(event: MPSkipIntervalCommandEvent) -> MPRemoteCommandHandlerStatus {
+        // TODO:
+        Log.d(event.interval)
+        return .success
+    }
+
     func add(item: MPMediaItem) {
         songs.append(item)
+    }
+
+    private func setNowPlayingInfo(by item: MPMediaItem) {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = item.title
+        nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = item.albumTitle
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
 
