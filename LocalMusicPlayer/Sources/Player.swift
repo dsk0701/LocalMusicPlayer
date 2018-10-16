@@ -19,6 +19,7 @@ class Player: NSObject {
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
     private(set) var songs = [MPMediaItem]()
+    private var playingSong = MPMediaItem()
 
     // var isPlaying: Bool {
     //     return player == nil ? false : player.isPlaying
@@ -39,7 +40,7 @@ class Player: NSObject {
             Log.e(error)
         }
 
-        // TODO: 再生中の曲を再生したり
+        // TODO: 今まで再生中の曲があれば一旦再生
         guard let song = songs.first, let songURL = song.assetURL else { return }
 
         do {
@@ -71,6 +72,7 @@ class Player: NSObject {
             player.prepareToPlay()
             player.play()
 
+            playingSong = item
             songs.append(item)
             setNowPlayingInfo(by: item)
             state = .playing
@@ -162,9 +164,11 @@ class Player: NSObject {
 
 extension Player: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        Log.d()
         // 曲の再生が終わったら呼ばれる。
         // TODO: 次の曲を再生する
-        Log.d()
+        let song = NextSongChooser().choose(nowPlayingUrl: player.url)
+        Log.d("album title: \(song?.albumTitle ?? "")")
     }
 
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
@@ -174,10 +178,12 @@ extension Player: AVAudioPlayerDelegate {
     // 電話がかかってきたときやイヤホンジャックが抜かれたときなどの中断で呼ばれる
     func audioPlayerBeginInterruption(_ player: AVAudioPlayer) {
         Log.d()
+        pause()
     }
 
     // 中断が終わったら呼ばれる
     func audioPlayerEndInterruption(_ player: AVAudioPlayer, withOptions flags: Int) {
         Log.d()
+        resume()
     }
 }
