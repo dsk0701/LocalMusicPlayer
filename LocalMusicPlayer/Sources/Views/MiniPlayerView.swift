@@ -51,6 +51,6 @@ extension MiniPlayerView: PlayerObserver {
             image = R.image.pause()
         }
 
-        playOrStopBtn.setImage(image, for: UIControlState.normal)
+        playOrStopBtn.setImage(image, for: UIControl.State.normal)
     }
 }

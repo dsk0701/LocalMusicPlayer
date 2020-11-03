@@ -34,7 +34,7 @@ class Player: NSObject {
         initRemoteCommand()
 
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             Log.e(error)
@@ -58,7 +58,7 @@ class Player: NSObject {
     }
 
     func remove(observer: PlayerObserver) {
-        if let index = observers.index(where: { $0 === observer }) {
+        if let index = observers.firstIndex(where: { $0 === observer }) {
             observers.remove(at: index)
         }
     }
