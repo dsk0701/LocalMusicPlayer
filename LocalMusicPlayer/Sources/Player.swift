@@ -163,15 +163,15 @@ class Player: NSObject {
         nowPlayingInfo[MPMediaItemPropertyTitle] = item.title
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = item.albumTitle
         nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player.duration
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
 
 extension Player: AVAudioPlayerDelegate {
+    // 曲の再生が終わったら呼ばれる。
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         Log.d()
-        // 曲の再生が終わったら呼ばれる。
         let song = NextSongChooser().choose(nowPlayingUrl: player.url)
         Log.d("album title: \(song?.albumTitle), title: \(song?.title)")
         play(item: song)
