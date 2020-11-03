@@ -11,8 +11,34 @@ import MediaPlayer
 class NextSongChooser {
 
     func choose(nowPlayingUrl: URL? = nil) -> MPMediaItem? {
-        // 再生中の曲がある場合は、アルバムの次の曲を再生する
-        return getMediaItemWith(assetUrl: nowPlayingUrl)
+        // 再生中の曲を取得。できなかった場合はnilを返却
+        guard let nowPlayingItem = getMediaItemWith(assetUrl: nowPlayingUrl) else { return nil }
+        // 再生中の曲のアルバムの次の曲があればそれを返却
+        if let nextSongInAlbum = getNextSongInAlbum(nowPlayingItem: nowPlayingItem) {
+            return nextSongInAlbum
+        }
+        // 再生している曲がアルバム最後の曲の場合は次のアルバムを再生
+        return getFirstSongOfNextAlbum(nowPlayingItem: nowPlayingItem)
+    }
+
+    private func getNextSongInAlbum(nowPlayingItem: MPMediaItem) -> MPMediaItem? {
+        // 再生中の曲がある場合は、アルバムの次の曲を返却。
+        // 再生している曲がアルバム最後の曲の場合はnilを返却。
+        Log.d("albumTrackNumber: \(nowPlayingItem.albumTrackNumber)")
+        Log.d("albumTrackCount: \(nowPlayingItem.albumTrackCount)")
+        guard nowPlayingItem.albumTrackNumber < nowPlayingItem.albumTrackCount else { return nil }
+        let predicate = MPMediaPropertyPredicate(
+            value: nowPlayingItem.albumTitle,
+            forProperty: MPMediaItemPropertyAlbumTitle,
+            comparisonType: MPMediaPredicateComparison.equalTo);
+        let query = MPMediaQuery(filterPredicates: [predicate])
+        return query.items?[nowPlayingItem.albumTrackNumber]
+    }
+
+    private func getFirstSongOfNextAlbum(nowPlayingItem: MPMediaItem) -> MPMediaItem? {
+        // TODO: 引数の曲のアルバムの次のアルバムのはじめの曲を返す。
+        // 未実装。とりあえず引数をそのまま返す。
+        return nowPlayingItem
     }
 
     /**

@@ -40,7 +40,7 @@ class Player: NSObject {
             Log.e(error)
         }
 
-        // TODO: 今まで再生中の曲があれば一旦再生
+        // 今まで再生中の曲があれば一旦再生
         guard let song = songs.first, let songURL = song.assetURL else { return }
 
         do {
@@ -63,8 +63,8 @@ class Player: NSObject {
         }
     }
 
-    func play(item: MPMediaItem) {
-        guard let songURL = item.assetURL else { return }
+    func play(item: MPMediaItem?) {
+        guard let item = item, let songURL = item.assetURL else { return }
 
         do {
             player = try AVAudioPlayer(contentsOf: songURL)
@@ -172,9 +172,9 @@ extension Player: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         Log.d()
         // 曲の再生が終わったら呼ばれる。
-        // TODO: 次の曲を再生する
         let song = NextSongChooser().choose(nowPlayingUrl: player.url)
-        Log.d("album title: \(song?.albumTitle ?? "")")
+        Log.d("album title: \(song?.albumTitle), title: \(song?.title)")
+        play(item: song)
     }
 
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
