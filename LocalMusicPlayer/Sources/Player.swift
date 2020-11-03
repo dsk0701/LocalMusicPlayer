@@ -7,7 +7,7 @@ protocol PlayerObserver: class {
 
 class Player: NSObject {
     enum State {
-        case stop, playing, pause
+        case stop, playing, pause, error
     }
 
     private(set) var state = State.stop {
@@ -81,32 +81,38 @@ class Player: NSObject {
         }
     }
 
-    @objc func resumeOrPause() {
+    @objc func resumeOrPause() -> MPRemoteCommandHandlerStatus {
         switch state {
         case .playing:
-            pause()
+            return pause()
         case .pause:
-            resume()
+            return resume()
         default:
-            break
+            return .commandFailed
         }
     }
 
-    @objc func resume() {
-        guard player != nil else { return }
+    @objc func resume() -> MPRemoteCommandHandlerStatus {
+        guard player != nil else { return .commandFailed }
 
-        player.play()
-        state = .playing
+        if player.play() {
+            state = .playing
+        } else {
+            state = .error
+        }
+        return state == .error ? .commandFailed : .success
     }
 
-    @objc func pause() {
+    @objc func pause() -> MPRemoteCommandHandlerStatus {
         player.pause()
         state = .pause
+        return .success
     }
 
-    @objc func stop() {
+    @objc func stop() -> MPRemoteCommandHandlerStatus {
         player.stop()
         state = .stop
+        return .success
     }
 
     @objc func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {

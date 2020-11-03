@@ -45,7 +45,7 @@ extension MiniPlayerView: PlayerObserver {
 
         var image: UIImage?
         switch state {
-        case .stop, .pause:
+        case .stop, .pause, .error:
             image = R.image.play()
         case .playing:
             image = R.image.pause()
