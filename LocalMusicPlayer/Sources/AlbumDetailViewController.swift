@@ -50,6 +50,6 @@ extension AlbumDetailViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        app.player.play(item: album.items[indexPath.row])
+        app.player.play(items: album.items, startIndex: indexPath.row)
     }
 }

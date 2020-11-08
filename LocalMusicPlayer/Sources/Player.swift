@@ -18,14 +18,12 @@ class Player: NSObject {
 
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
-    private(set) var songs = [MPMediaItem]()
-    private var playingSong = MPMediaItem()
 
     // var isPlaying: Bool {
     //     return player == nil ? false : player.isPlaying
     // }
 
-    private var player: AVAudioPlayer!
+    private var player = AVQueuePlayer()
     private var observers = [PlayerObserver]()
 
     override init() {
@@ -36,17 +34,6 @@ class Player: NSObject {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            Log.e(error)
-        }
-
-        // 今まで再生中の曲があれば一旦再生
-        guard let song = songs.first, let songURL = song.assetURL else { return }
-
-        do {
-            player = try AVAudioPlayer(contentsOf: songURL)
-            player.delegate = self
-            state = .pause
         } catch {
             Log.e(error)
         }
@@ -63,21 +50,16 @@ class Player: NSObject {
         }
     }
 
-    func play(item: MPMediaItem?) {
-        guard let item = item, let songURL = item.assetURL else { return }
+    func play(items: [MPMediaItem], startIndex: Int) {
+        let playerItems = items
+            .compactMap { $0.assetURL }
+            .map { AVPlayerItem(url: $0) }
+        player = AVQueuePlayer(items: playerItems.dropFirst(startIndex).map { $0 })
+        player.play()
+        state = .playing
 
-        do {
-            player = try AVAudioPlayer(contentsOf: songURL)
-            player.delegate = self
-            player.prepareToPlay()
-            player.play()
-
-            playingSong = item
-            songs.append(item)
+        if let item = items.first {
             setNowPlayingInfo(by: item)
-            state = .playing
-        } catch {
-            Log.e(error)
         }
     }
 
@@ -93,14 +75,9 @@ class Player: NSObject {
     }
 
     @objc func resume() -> MPRemoteCommandHandlerStatus {
-        guard player != nil else { return .commandFailed }
-
-        if player.play() {
-            state = .playing
-        } else {
-            state = .error
-        }
-        return state == .error ? .commandFailed : .success
+        player.play()
+        state = .playing
+        return .success
     }
 
     @objc func pause() -> MPRemoteCommandHandlerStatus {
@@ -110,7 +87,7 @@ class Player: NSObject {
     }
 
     @objc func stop() -> MPRemoteCommandHandlerStatus {
-        player.stop()
+        player.removeAllItems()
         state = .stop
         return .success
     }
@@ -139,10 +116,6 @@ class Player: NSObject {
         return .success
     }
 
-    func add(item: MPMediaItem) {
-        songs.append(item)
-    }
-
     private func initRemoteCommand() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.playCommand.addTarget(self, action: #selector(resume))
@@ -165,31 +138,5 @@ class Player: NSObject {
         nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
-}
-
-extension Player: AVAudioPlayerDelegate {
-    // 曲の再生が終わったら呼ばれる。
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        Log.d()
-        let song = NextSongChooser().choose(nowPlayingUrl: player.url)
-        Log.d("album title: \(song?.albumTitle), title: \(song?.title)")
-        play(item: song)
-    }
-
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        Log.d()
-    }
-
-    // 電話がかかってきたときやイヤホンジャックが抜かれたときなどの中断で呼ばれる
-    func audioPlayerBeginInterruption(_ player: AVAudioPlayer) {
-        Log.d()
-        pause()
-    }
-
-    // 中断が終わったら呼ばれる
-    func audioPlayerEndInterruption(_ player: AVAudioPlayer, withOptions flags: Int) {
-        Log.d()
-        resume()
     }
 }
