@@ -11,6 +11,7 @@
 		69056AEA1FE3C25200370BB6 /* AlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69056AE91FE3C25200370BB6 /* AlbumListViewController.swift */; };
 		69056AED1FE3C25200370BB6 /* AlbumList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69056AEB1FE3C25200370BB6 /* AlbumList.storyboard */; };
 		69056AF21FE3C25200370BB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */; };
+		690C805D2576162600481599 /* LocalMusicPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690C805C2576162600481599 /* LocalMusicPlayerApp.swift */; };
 		6914348B205B513A00C34170 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6914348A205B513A00C34170 /* Log.swift */; };
 		692B08D7203D6202001E6474 /* MiniPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 692B08D6203D6202001E6474 /* MiniPlayerView.xib */; };
 		692B08D9203E3CC3001E6474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692B08D8203E3CC3001E6474 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		69056AEC1FE3C25200370BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/AlbumList.storyboard; sourceTree = "<group>"; };
 		69056AF11FE3C25200370BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69056AF31FE3C25200370BB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		690C805C2576162600481599 /* LocalMusicPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMusicPlayerApp.swift; sourceTree = "<group>"; };
 		6914348A205B513A00C34170 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		692B08D6203D6202001E6474 /* MiniPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiniPlayerView.xib; sourceTree = "<group>"; };
 		692B08D8203E3CC3001E6474 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				69D855F61FF3B85A0005C298 /* Top.storyboard */,
 				69D855F81FF86CDA0005C298 /* TopViewController.swift */,
 				697890952138BF1B0006803F /* NextSongChooser.swift */,
+				690C805C2576162600481599 /* LocalMusicPlayerApp.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				6914348B205B513A00C34170 /* Log.swift in Sources */,
 				69FA7B9A20177A8C00E0BA46 /* NavigationController.swift in Sources */,
 				69056AEA1FE3C25200370BB6 /* AlbumListViewController.swift in Sources */,
+				690C805D2576162600481599 /* LocalMusicPlayerApp.swift in Sources */,
 				692B08DB2044E63C001E6474 /* MiniPlayerView.swift in Sources */,
 				696E385920075BAA00783C4D /* AlbumDetailViewController.swift in Sources */,
 				69056AE81FE3C25200370BB6 /* AppDelegate.swift in Sources */,
