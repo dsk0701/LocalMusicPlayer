@@ -1,8 +1,7 @@
 import SwiftUI
-import MediaPlayer
 
 struct AlbumListRow: View {
-    let album: MPMediaItemCollection
+    let album: AlbumViewModel
 
     var body: some View {
         HStack {
@@ -14,21 +13,20 @@ struct AlbumListRow: View {
                     .frame(width: 60, height: 60)
             }
             */
-            album.representativeItem?.artwork.map {
-                $0.image(at: $0.bounds.size).map {
-                    Image(uiImage: $0)
-                        .renderingMode(.original)
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                }
+            album.artWorkImage.map {
+                Image(uiImage: $0)
+                    .renderingMode(.original)
+                    .resizable()
+                    .frame(width: 60, height: 60)
             }
             VStack(alignment: .leading) {
-                album.representativeItem?.albumTitle.map {
+                album.title.map {
                     Text($0)
+                        .lineLimit(1)
                         .lineLimit(1)
                         .font(.headline)
                 }
-                album.representativeItem?.albumArtist.map {
+                album.artist.map {
                     Text($0)
                         .font(.subheadline)
                         .lineLimit(1)

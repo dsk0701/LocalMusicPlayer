@@ -1,4 +1,5 @@
 import SwiftUI
+import MediaPlayer
 
 @main
 struct LocalMusicPlayerApp: App {
@@ -8,7 +9,14 @@ struct LocalMusicPlayerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AlbumListView()
+            AlbumListView(albums: makeAlbumViewModels())
+        }
+    }
+
+    private func makeAlbumViewModels() -> [AlbumViewModel] {
+        guard let collections = MPMediaQuery.albums().collections else { return [] }
+        return collections.compactMap { $0.representativeItem }.map { album in
+            AlbumViewModel(mpMediaItem: album)
         }
     }
 }

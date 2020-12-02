@@ -1,16 +1,12 @@
 import SwiftUI
-import MediaPlayer
 
 struct AlbumListView: View {
-    private let albums: [MPMediaItemCollection] = {
-        guard let albums = MPMediaQuery.albums().collections else { return [MPMediaItemCollection]() }
-        return albums
-    }()
+    let albums: [AlbumViewModel]
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(albums, id: \.self) { (album) in
+                ForEach(albums) { (album) in
                     NavigationLink(destination: AlbumDetailView(album: album)) {
                         AlbumListRow(album: album)
                     }
@@ -22,6 +18,6 @@ struct AlbumListView: View {
 
 struct AlbumListView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumListView()
+        AlbumListView(albums: [])
     }
 }
