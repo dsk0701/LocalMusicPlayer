@@ -15,9 +15,7 @@ struct LocalMusicPlayerApp: App {
 
     private func makeAlbumViewModels() -> [AlbumViewModel] {
         guard let collections = MPMediaQuery.albums().collections else { return [] }
-        return collections.compactMap { $0.representativeItem }.map { album in
-            AlbumViewModel(mpMediaItem: album)
-        }
+        return collections.map { AlbumViewModel(mpMediaItemCollection: $0) }
     }
 }
 

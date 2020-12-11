@@ -6,17 +6,17 @@ struct AlbumViewModel: Identifiable {
     let title: String?
     let artist: String?
     let artWorkImage: UIImage?
-    let mpMediaItem: MPMediaItem
+    let mpMediaItemCollection: MPMediaItemCollection
 
-    init(mpMediaItem: MPMediaItem) {
-        id = mpMediaItem.persistentID
-        title = mpMediaItem.albumTitle
-        artist = mpMediaItem.artist
-        if let artwork = mpMediaItem.artwork {
+    init(mpMediaItemCollection: MPMediaItemCollection) {
+        id = mpMediaItemCollection.persistentID
+        title = mpMediaItemCollection.representativeItem?.albumTitle
+        artist = mpMediaItemCollection.representativeItem?.albumArtist
+        if let artwork = mpMediaItemCollection.representativeItem?.artwork {
             artWorkImage = artwork.image(at: artwork.bounds.size)
         } else {
             artWorkImage = nil
         }
-        self.mpMediaItem = mpMediaItem
+        self.mpMediaItemCollection = mpMediaItemCollection
     }
 }
