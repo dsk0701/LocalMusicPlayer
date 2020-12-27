@@ -17,7 +17,11 @@ struct AlbumDetailView: View {
                     }
                 }
                 ForEach(album.mpMediaItemCollection.items, id: \.self) { (item) in
-                    AlbumDetailRow(title: item.title, duration: item.playbackDuration)
+                    AlbumDetailRow(
+                        title: item.title,
+                        artist: item.artist != item.albumArtist ? item.artist : nil, // アルバムのアーティストと曲のアーティストが異なる場合のみ表示する。
+                        duration: item.playbackDuration
+                    )
                 }
             }.navigationTitle(Text(album.title ?? ""))
         }

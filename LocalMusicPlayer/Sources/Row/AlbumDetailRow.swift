@@ -2,15 +2,18 @@ import SwiftUI
 
 struct AlbumDetailRow: View {
     let title: String?
+    let artist: String?
     let duration: TimeInterval
 
     var body: some View {
         HStack {
-            title.map {
-                Text($0)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading) {
+                title.map { Text($0) }
+                artist.map { Text($0).font(.caption) }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             Text(format(duration: duration))
+                .font(.subheadline)
         }
     }
 
@@ -26,7 +29,11 @@ struct AlbumDetailRow: View {
 struct AlbumDetailRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            AlbumDetailRow(title: "恋のマシンガン", duration: 12345.678)
+            AlbumDetailRow(
+                title: "GOOD LIFE",
+                artist: "SUITE CHIC Feat.XBS",
+                duration: 12345.678
+            )
         }
     }
 }
