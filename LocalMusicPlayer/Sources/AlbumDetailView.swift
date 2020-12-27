@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AlbumDetailView: View {
+    @Environment(\.player) private var player
     let album: AlbumViewModel
 
     var body: some View {
@@ -16,12 +17,17 @@ struct AlbumDetailView: View {
                         Spacer()
                     }
                 }
-                ForEach(album.mpMediaItemCollection.items, id: \.self) { (item) in
-                    AlbumDetailRow(
-                        title: item.title,
-                        artist: item.artist != item.albumArtist ? item.artist : nil, // アルバムのアーティストと曲のアーティストが異なる場合のみ表示する。
-                        duration: item.playbackDuration
-                    )
+                ForEach(album.mpMediaItemCollection.items.indices) { index in
+                    Button(action: {
+                        player.play(items: album.mpMediaItemCollection.items, startIndex: index)
+                    }, label: {
+                        let item = album.mpMediaItemCollection.items[index]
+                        AlbumDetailRow(
+                            title: item.title,
+                            artist: item.artist != item.albumArtist ? item.artist : nil, // アルバムのアーティストと曲のアーティストが異なる場合のみ表示する。
+                            duration: item.playbackDuration
+                        )
+                    })
                 }
             }.navigationTitle(Text(album.title ?? ""))
         }
