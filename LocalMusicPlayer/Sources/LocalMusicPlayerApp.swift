@@ -9,7 +9,15 @@ struct LocalMusicPlayerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AlbumListView(albums: makeAlbumViewModels())
+            ZStack {
+                AlbumListView(albums: makeAlbumViewModels())
+                VStack {
+                    Spacer()
+                    PlayerView()
+                        .background(Blur().edgesIgnoringSafeArea(.bottom))
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                }
+            }
         }
     }
 
