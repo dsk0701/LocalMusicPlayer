@@ -6,17 +6,21 @@ struct LocalMusicPlayerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     @Environment(\.player) private var player
+    @State private var playerViewHeight = CGFloat.zero
 
     var body: some Scene {
         WindowGroup {
             ZStack {
                 AlbumListView(albums: makeAlbumViewModels())
+                    .padding(.bottom, playerViewHeight)
                 VStack {
                     Spacer()
                     PlayerView()
                         .background(Blur().edgesIgnoringSafeArea(.bottom))
                         .frame(maxWidth: .infinity, maxHeight: 60)
                 }
+            }.onPreferenceChange(PlayerViewPreferenceKey.self) { value in
+                playerViewHeight = value.size.height
             }
         }
     }
