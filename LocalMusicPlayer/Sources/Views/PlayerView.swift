@@ -1,25 +1,43 @@
 import SwiftUI
 
 struct PlayerView: View {
+    @EnvironmentObject var player: Player
+
     var body: some View {
         GeometryReader { geo in
             HStack {
-                Image("AlbumImage")
-                    .resizable()
-                    .scaledToFit()
+                player.artworkImage.map {
+                    Image(uiImage: $0)
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                }
                 VStack(alignment: .leading) {
-                    Text("曲名")
-                    Text("アーティスト名")
-                        .font(.caption)
-                }.frame(maxWidth: .infinity, alignment: .leading)
+                    player.title.map {
+                        Text($0)
+                            .lineLimit(1)
+                            .font(.headline)
+                    }
+                    player.artist.map {
+                        Text($0)
+                            .font(.caption)
+                            .lineLimit(1)
+                    }
+                }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Button(action: {
-                    print("TODO: 未実装")
+                    _ = player.resumeOrPause()
                 }, label: {
-                    // TODO: 状態ごとに画像を変える.
-                    Image("Play")
+                    switch player.state {
+                    case .playing:
+                        Image("Pause")
+                    default:
+                        Image("Play")
+                    }
                 })
             }
-                .padding(.all, 8)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
                 .preference(
                     key: PlayerViewPreferenceKey.self,
                     value: PlayerViewPreference(size: geo.size)

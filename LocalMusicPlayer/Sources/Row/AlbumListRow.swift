@@ -23,7 +23,6 @@ struct AlbumListRow: View {
                 album.title.map {
                     Text($0)
                         .lineLimit(1)
-                        .lineLimit(1)
                         .font(.headline)
                 }
                 album.artist.map {

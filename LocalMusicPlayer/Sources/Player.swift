@@ -16,20 +16,29 @@ final class Player: NSObject, ObservableObject {
             observers.forEach { $0.stateDidChanged(state: state) }
         }
     }
+    @Published private(set) var title: String?
+    @Published private(set) var artist: String?
+    @Published private(set) var artworkImage: UIImage?
 
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
 
-    // var isPlaying: Bool {
-    //     return player == nil ? false : player.isPlaying
-    // }
-
     private var player = AVQueuePlayer()
     private var observers = [PlayerObserver]()
+    private var mediaItems = [MPMediaItem]()
+    private var playingItemIndex: Int? {
+        didSet {
+            guard let playingItemIndex = playingItemIndex, playingItemIndex < mediaItems.count else { return }
+            let playingItem = mediaItems[playingItemIndex]
+            setNowPlayingInfo(by: playingItem)
+            title = playingItem.title
+            artist = playingItem.artist
+            artworkImage = playingItem.artwork.map { $0.image(at: $0.bounds.size) } ?? nil
+        }
+    }
 
     override init() {
         super.init()
-
         initRemoteCommand()
 
         do {
@@ -52,16 +61,15 @@ final class Player: NSObject, ObservableObject {
     }
 
     func play(items: [MPMediaItem], startIndex: Int) {
+        mediaItems = items
+        playingItemIndex = startIndex
         let playerItems = items
             .compactMap { $0.assetURL }
             .map { AVPlayerItem(url: $0) }
         player = AVQueuePlayer(items: playerItems.dropFirst(startIndex).map { $0 })
         player.play()
         state = .playing
-
-        if let item = items.first {
-            setNowPlayingInfo(by: item)
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(didFinishPlayingItem), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
 
     @objc func resumeOrPause() -> MPRemoteCommandHandlerStatus {
@@ -139,5 +147,13 @@ final class Player: NSObject, ObservableObject {
         nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+
+    @objc func didFinishPlayingItem() {
+        // addObserverしたスレッドと別スレッドで実行されるかもしれないのでメインスレッドに切り替える.
+        DispatchQueue.main.async { [weak self] in
+            guard let prevIndex = self?.playingItemIndex else { return }
+            self?.playingItemIndex = prevIndex + 1
+        }
     }
 }
