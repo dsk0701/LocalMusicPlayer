@@ -7,7 +7,7 @@ struct AlbumDetailView: View {
     var body: some View {
         GeometryReader { geometry in
             List {
-                album.artWorkImage.map { uiImage in
+                album.artworkImage.map { uiImage in
                     HStack {
                         Spacer()
                         Image(uiImage: uiImage)

@@ -13,7 +13,7 @@ struct AlbumListRow: View {
                     .frame(width: 60, height: 60)
             }
             */
-            album.artWorkImage.map {
+            album.artworkImage.map {
                 Image(uiImage: $0)
                     .renderingMode(.original)
                     .resizable()

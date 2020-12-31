@@ -5,7 +5,7 @@ struct AlbumViewModel: Identifiable {
     let id: MPMediaEntityPersistentID
     let title: String?
     let artist: String?
-    let artWorkImage: UIImage?
+    let artworkImage: UIImage?
     let mpMediaItemCollection: MPMediaItemCollection
 
     init(mpMediaItemCollection: MPMediaItemCollection) {
@@ -13,9 +13,9 @@ struct AlbumViewModel: Identifiable {
         title = mpMediaItemCollection.representativeItem?.albumTitle
         artist = mpMediaItemCollection.representativeItem?.albumArtist
         if let artwork = mpMediaItemCollection.representativeItem?.artwork {
-            artWorkImage = artwork.image(at: artwork.bounds.size)
+            artworkImage = artwork.image(at: artwork.bounds.size)
         } else {
-            artWorkImage = nil
+            artworkImage = nil
         }
         self.mpMediaItemCollection = mpMediaItemCollection
     }
