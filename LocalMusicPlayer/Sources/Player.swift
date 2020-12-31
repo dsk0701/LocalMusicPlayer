@@ -1,16 +1,17 @@
 import MediaPlayer
 import AVFoundation
+import Combine
 
 protocol PlayerObserver: class {
     func stateDidChanged(state: Player.State)
 }
 
-class Player: NSObject {
+final class Player: NSObject, ObservableObject {
     enum State {
         case stop, playing, pause, error
     }
 
-    private(set) var state = State.stop {
+    @Published private(set) var state = State.stop {
         didSet {
             observers.forEach { $0.stateDidChanged(state: state) }
         }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AlbumDetailView: View {
-    @Environment(\.player) private var player
+    @EnvironmentObject var player: Player
     let album: AlbumViewModel
 
     var body: some View {
@@ -27,6 +27,18 @@ struct AlbumDetailView: View {
                             artist: item.artist != item.albumArtist ? item.artist : nil, // アルバムのアーティストと曲のアーティストが異なる場合のみ表示する。
                             duration: item.playbackDuration
                         )
+
+                        // @Publishedの動作確認用
+                        switch player.state {
+                        case .stop:
+                            Text("player.stop")
+                        case .playing:
+                            Text("player.playing")
+                        case .pause:
+                            Text("player.pause")
+                        case .error:
+                            Text("player.error")
+                        }
                     })
                 }
             }.navigationTitle(Text(album.title ?? ""))

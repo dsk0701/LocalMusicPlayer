@@ -5,7 +5,6 @@ import MediaPlayer
 struct LocalMusicPlayerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    @Environment(\.player) private var player
     @State private var playerViewHeight = CGFloat.zero
 
     var body: some Scene {
@@ -13,6 +12,7 @@ struct LocalMusicPlayerApp: App {
             ZStack {
                 AlbumListView(albums: makeAlbumViewModels())
                     .padding(.bottom, playerViewHeight)
+                    .environmentObject(Player())
                 VStack {
                     Spacer()
                     PlayerView()
@@ -31,6 +31,13 @@ struct LocalMusicPlayerApp: App {
     }
 }
 
+/*
+SwiftUIでのシングルトンは、下記のようにする事で実現できる。
+
+struct SomeView: View {
+    @Environment(\.player) private var player
+}
+
 struct PlayerKey: EnvironmentKey {
     // デフォルト値
     static let defaultValue: Player = Player()
@@ -39,3 +46,4 @@ struct PlayerKey: EnvironmentKey {
 extension EnvironmentValues {
     var player: Player { self[PlayerKey.self] }
 }
+*/
