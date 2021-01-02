@@ -11,13 +11,11 @@ struct LocalMusicPlayerApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                AlbumListView(albums: makeAlbumViewModels())
-                    .padding(.bottom, playerViewHeight)
+                AlbumListView(playerViewHeight: $playerViewHeight, albums: makeAlbumViewModels())
                     .environmentObject(player)
                 VStack {
                     Spacer()
                     PlayerView()
-                        .background(Blur().edgesIgnoringSafeArea(.bottom))
                         .frame(maxWidth: .infinity, maxHeight: 60)
                         .environmentObject(player)
                 }

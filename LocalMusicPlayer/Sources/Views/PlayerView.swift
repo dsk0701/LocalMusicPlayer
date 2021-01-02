@@ -5,39 +5,43 @@ struct PlayerView: View {
 
     var body: some View {
         GeometryReader { geo in
-            HStack {
-                player.artworkImage.map {
-                    Image(uiImage: $0)
-                        .renderingMode(.original)
-                        .resizable()
-                        .scaledToFit()
+            VStack {
+                HStack {
+                    player.artworkImage.map {
+                        Image(uiImage: $0)
+                            .renderingMode(.original)
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    VStack(alignment: .leading) {
+                        player.title.map {
+                            Text($0)
+                                .lineLimit(1)
+                                .font(.headline)
+                        }
+                        player.artist.map {
+                            Text($0)
+                                .font(.caption)
+                                .lineLimit(1)
+                        }
+                    }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button(action: {
+                        _ = player.resumeOrPause()
+                    }, label: {
+                        switch player.state {
+                        case .playing:
+                            Image("Pause")
+                        default:
+                            Image("Play")
+                        }
+                    })
                 }
-                VStack(alignment: .leading) {
-                    player.title.map {
-                        Text($0)
-                            .lineLimit(1)
-                            .font(.headline)
-                    }
-                    player.artist.map {
-                        Text($0)
-                            .font(.caption)
-                            .lineLimit(1)
-                    }
-                }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Button(action: {
-                    _ = player.resumeOrPause()
-                }, label: {
-                    switch player.state {
-                    case .playing:
-                        Image("Pause")
-                    default:
-                        Image("Play")
-                    }
-                })
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 16)
+                Spacer() // bottomセーフエリア用
             }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 16)
+                .background(Blur().edgesIgnoringSafeArea(.bottom))
                 .preference(
                     key: PlayerViewPreferenceKey.self,
                     value: PlayerViewPreference(size: geo.size)
