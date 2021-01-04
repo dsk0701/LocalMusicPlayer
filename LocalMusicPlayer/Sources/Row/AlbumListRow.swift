@@ -31,6 +31,8 @@ struct AlbumListRow: View {
                         .lineLimit(1)
                 }
             }
+                .foregroundColor(.primary)
         }
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
