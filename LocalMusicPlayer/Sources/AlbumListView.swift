@@ -22,6 +22,7 @@ struct AlbumListView: View {
             }
                 .navigationTitle(Text("アルバム"))
         }
+            .accentColor(Color.orange)
     }
 }
 
