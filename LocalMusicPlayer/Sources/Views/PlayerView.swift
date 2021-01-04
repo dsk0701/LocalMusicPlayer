@@ -31,11 +31,16 @@ struct PlayerView: View {
                     }, label: {
                         switch player.state {
                         case .playing:
-                            Image("Pause")
+                            Image(systemName: "pause.fill")
+                                .resizable()
+                                .foregroundColor(.orange)
                         default:
-                            Image("Play")
+                            Image(systemName: "play.fill")
+                                .resizable()
+                                .foregroundColor(.orange)
                         }
                     })
+                    .frame(maxWidth: 30, maxHeight: 30)
                 }
                     .padding(.vertical, 8)
                     .padding(.horizontal, 16)
@@ -87,6 +92,7 @@ struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PlayerView()
+                .environmentObject(Player(title: "タイトル", artist: "アーティスト", artworkImage: UIImage(named: "AlbumImage")))
         }.previewLayout(.fixed(width: 320, height: 70))
     }
 }

@@ -37,6 +37,12 @@ final class Player: NSObject, ObservableObject {
         }
     }
 
+    convenience init(title: String?, artist: String?, artworkImage: UIImage?) {
+        self.init()
+        self.title = title
+        self.artist = artist
+        self.artworkImage = artworkImage
+    }
     override init() {
         super.init()
         initRemoteCommand()
