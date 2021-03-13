@@ -6,6 +6,7 @@ struct LocalMusicPlayerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     @State private var playerViewHeight = CGFloat.zero
+    @State private var playerIsPresent = false
     let player = Player()
 
     var body: some Scene {
@@ -18,6 +19,10 @@ struct LocalMusicPlayerApp: App {
                     PlayerView()
                         .frame(maxWidth: .infinity, maxHeight: 60)
                         .environmentObject(player)
+                        .fullScreenCover(isPresented: $playerIsPresent, content: FullScreenPlayerView.init)
+                    .onTapGesture {
+                        self.playerIsPresent.toggle()
+                    }
                 }
             }.onPreferenceChange(PlayerViewPreferenceKey.self) { value in
                 playerViewHeight = value.size.height
