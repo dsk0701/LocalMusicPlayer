@@ -11,11 +11,7 @@ final class Player: NSObject, ObservableObject {
         case stop, playing, pause, error
     }
 
-    @Published private(set) var state = State.stop {
-        didSet {
-            observers.forEach { $0.stateDidChanged(state: state) }
-        }
-    }
+    @Published private(set) var state = State.stop
     @Published private(set) var title: String?
     @Published private(set) var artist: String?
     @Published private(set) var artworkImage: UIImage?
@@ -24,7 +20,6 @@ final class Player: NSObject, ObservableObject {
     // private(set) var albums: [MPMediaItemCollection]
 
     private var player = AVQueuePlayer()
-    private var observers = [PlayerObserver]()
     private var mediaItems = [MPMediaItem]()
     private var playingItemIndex: Int? {
         didSet {
@@ -52,17 +47,6 @@ final class Player: NSObject, ObservableObject {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             Log.e(error)
-        }
-    }
-
-    func add(observer: PlayerObserver) {
-        guard !observers.contains(where: { $0 === observer }) else { return }
-        observers.append(observer)
-    }
-
-    func remove(observer: PlayerObserver) {
-        if let index = observers.firstIndex(where: { $0 === observer }) {
-            observers.remove(at: index)
         }
     }
 
