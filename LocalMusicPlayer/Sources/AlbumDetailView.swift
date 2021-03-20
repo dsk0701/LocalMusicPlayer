@@ -5,6 +5,10 @@ struct AlbumDetailView: View {
     @Binding var playerViewHeight: CGFloat
     let album: AlbumViewModel
 
+    private var playingItemIndex: Int? {
+        album.mpMediaItemCollection.items.firstIndex(where: { $0 == player.playingItem})
+    }
+
     var body: some View {
         GeometryReader { geometry in
             // VStack内のViewとViewの間にスペースを開けないようにspacing: 0にしている。
@@ -44,8 +48,10 @@ struct AlbumDetailView: View {
                                 Text("player.error")
                             }
                         })
+                            .listRowBackground(playingItemIndex == index ? Color.orange.opacity(0.1) : nil)
                     }
-                }.navigationTitle(Text(album.title ?? ""))
+                }
+                    .navigationTitle(Text(album.title ?? ""))
                 Rectangle().fill(Color.clear).frame(height: playerViewHeight)
             }
         }

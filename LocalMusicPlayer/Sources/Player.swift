@@ -15,6 +15,7 @@ final class Player: NSObject, ObservableObject {
     @Published private(set) var title: String?
     @Published private(set) var artist: String?
     @Published private(set) var artworkImage: UIImage?
+    @Published private(set) var playingItem: MPMediaItem?
 
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
@@ -29,6 +30,7 @@ final class Player: NSObject, ObservableObject {
             title = playingItem.title
             artist = playingItem.artist
             artworkImage = playingItem.artwork.map { $0.image(at: $0.bounds.size) } ?? nil
+            self.playingItem = playingItem
         }
     }
 
