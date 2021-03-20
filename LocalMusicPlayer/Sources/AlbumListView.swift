@@ -13,7 +13,7 @@ struct AlbumListView: View {
                         // Row内にDividerつけるとタップ時に反応してしまう。
                         // また、Rowの下側につけるとDividerの上下にPaddingついているらしく、下までスクロールすると隙間ができるので上側につけている。
                         Divider()
-                        NavigationLink(destination: AlbumDetailView(album: album)) {
+                        NavigationLink(destination: AlbumDetailView(playerViewHeight: $playerViewHeight, album: album)) {
                             AlbumListRow(
                                 title: album.title,
                                 artist: album.artist,
