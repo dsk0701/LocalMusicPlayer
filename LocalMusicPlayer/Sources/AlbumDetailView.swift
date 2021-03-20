@@ -48,7 +48,7 @@ struct AlbumDetailView: View {
                                 Text("player.error")
                             }
                         })
-                            .listRowBackground(playingItemIndex == index ? Color.orange.opacity(0.1) : nil)
+                            .listRowBackground(playingItemIndex == index ? Color.orange.opacity(0.2) : nil)
                     }
                 }
                     .navigationTitle(Text(album.title ?? ""))
