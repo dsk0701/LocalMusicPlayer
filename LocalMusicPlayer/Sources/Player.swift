@@ -101,6 +101,11 @@ final class Player: NSObject, ObservableObject {
         return .success
     }
 
+    @objc func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+        player.seek(to: cmTime(from: event.positionTime))
+        return .success
+    }
+
     @objc func skipForward(event: MPSkipIntervalCommandEvent) -> MPRemoteCommandHandlerStatus {
         // TODO:
         Log.d(event.interval)
@@ -122,6 +127,7 @@ final class Player: NSObject, ObservableObject {
         // NOTE: リモコンにはひとまずスキップより曲送りを表示
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
         commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
+        commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(changePlaybackPosition(event:)))
         // commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 10)]
         // commandCenter.skipForwardCommand.addTarget(self, action: #selector(skipForward(event:)))
         // commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 10)]
@@ -143,5 +149,10 @@ final class Player: NSObject, ObservableObject {
             guard let prevIndex = self?.playingItemIndex else { return }
             self?.playingItemIndex = prevIndex + 1
         }
+    }
+
+    private func cmTime(from: TimeInterval) -> CMTime {
+        // REF: https://stackoverflow.com/questions/51353375/how-to-convert-timeinterval-to-cmtime-in-swift-4
+        CMTime(seconds: from, preferredTimescale: 1000000)
     }
 }
