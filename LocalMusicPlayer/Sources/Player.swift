@@ -2,10 +2,6 @@ import MediaPlayer
 import AVFoundation
 import Combine
 
-protocol PlayerObserver: class {
-    func stateDidChanged(state: Player.State)
-}
-
 final class Player: NSObject, ObservableObject {
     enum State {
         case stop, playing, pause, error
