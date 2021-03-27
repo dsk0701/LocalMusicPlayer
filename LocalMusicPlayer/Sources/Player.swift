@@ -12,6 +12,7 @@ final class Player: NSObject, ObservableObject {
     @Published private(set) var artist: String?
     @Published private(set) var artworkImage: UIImage?
     @Published private(set) var playingItem: MPMediaItem?
+    @Published private(set) var currentPosition: Double = 0
 
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
@@ -29,6 +30,7 @@ final class Player: NSObject, ObservableObject {
             self.playingItem = playingItem
         }
     }
+    private var timeObserverToken: Any?
 
     convenience init(title: String?, artist: String?, artworkImage: UIImage?) {
         self.init()
@@ -46,6 +48,12 @@ final class Player: NSObject, ObservableObject {
         } catch {
             Log.e(error)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(didFinishPlayingItem), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        removePeriodicTimeObserver()
     }
 
     func play(items: [MPMediaItem], startIndex: Int) {
@@ -54,10 +62,37 @@ final class Player: NSObject, ObservableObject {
         let playerItems = items
             .compactMap { $0.assetURL }
             .map { AVPlayerItem(url: $0) }
+        removePeriodicTimeObserver()
         player = AVQueuePlayer(items: playerItems.dropFirst(startIndex).map { $0 })
+        addPeriodicTimeObserver()
         player.play()
         state = .playing
-        NotificationCenter.default.addObserver(self, selector: #selector(didFinishPlayingItem), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+
+    private func addPeriodicTimeObserver() {
+        let time = cmTime(seconds: 0.5)
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] time in
+            guard let self = self, let currentItemDuration = self.player.currentItem?.duration else { return }
+            self.currentPosition = self.player.currentTime().seconds / currentItemDuration.seconds
+        }
+    }
+
+    private func removePeriodicTimeObserver() {
+        if let timeObserverToken = timeObserverToken {
+            player.removeTimeObserver(timeObserverToken)
+            self.timeObserverToken = nil
+        }
+    }
+
+    func seek(to position: Double) {
+        guard let duration = player.currentItem?.duration else { return }
+        let time = duration.seconds * position
+        // seek中はPeriodicTimeObserverを外す。
+        // そうしないと通知が止まらず画面のSeek位置が一瞬もとに戻ってしまう。
+        removePeriodicTimeObserver()
+        player.seek(to: cmTime(seconds: time)) { [weak self] b in
+            self?.addPeriodicTimeObserver()
+        }
     }
 
     @objc func resumeOrPause() -> MPRemoteCommandHandlerStatus {
@@ -102,7 +137,7 @@ final class Player: NSObject, ObservableObject {
     }
 
     @objc func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        player.seek(to: cmTime(from: event.positionTime))
+        player.seek(to: cmTime(seconds: event.positionTime))
         return .success
     }
 
@@ -151,8 +186,8 @@ final class Player: NSObject, ObservableObject {
         }
     }
 
-    private func cmTime(from: TimeInterval) -> CMTime {
+    private func cmTime(seconds: TimeInterval) -> CMTime {
         // REF: https://stackoverflow.com/questions/51353375/how-to-convert-timeinterval-to-cmtime-in-swift-4
-        CMTime(seconds: from, preferredTimescale: 1000000)
+        CMTime(seconds: seconds, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     }
 }

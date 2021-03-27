@@ -13,20 +13,20 @@ struct LocalMusicPlayerApp: App {
         WindowGroup {
             ZStack {
                 AlbumListView(playerViewHeight: $playerViewHeight, albums: makeAlbumViewModels())
-                    .environmentObject(player)
                 VStack {
                     Spacer()
                     PlayerView()
                         .frame(maxWidth: .infinity, maxHeight: 60)
-                        .environmentObject(player)
                         .fullScreenCover(isPresented: $playerIsPresent, content: FullScreenPlayerView.init)
                     .onTapGesture {
                         self.playerIsPresent.toggle()
                     }
                 }
-            }.onPreferenceChange(PlayerViewPreferenceKey.self) { value in
+            }
+            .onPreferenceChange(PlayerViewPreferenceKey.self) { value in
                 playerViewHeight = value.size.height
             }
+            .environmentObject(player)
         }
     }
 
