@@ -17,7 +17,10 @@ struct LocalMusicPlayerApp: App {
                     Spacer()
                     PlayerView()
                         .frame(maxWidth: .infinity, maxHeight: 60)
-                        .fullScreenCover(isPresented: $playerIsPresent, content: FullScreenPlayerView.init)
+                        .fullScreenCover(isPresented: $playerIsPresent) {
+                            FullScreenPlayerView()
+                                .environmentObject(player)
+                        }
                     .onTapGesture {
                         self.playerIsPresent.toggle()
                     }
