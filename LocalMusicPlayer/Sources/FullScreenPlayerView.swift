@@ -9,7 +9,7 @@ struct FullScreenPlayerView: View {
     var body: some View {
         VStack {
             Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            seekBar
+            SliderBar()
                 .padding()
                 .accentColor(.orange)
         }
@@ -31,26 +31,6 @@ struct FullScreenPlayerView: View {
                     print("value.translation.height: \(value.translation.height)")
                 }
         )
-    }
-
-    @State private var seekPosition: Double = 0.0
-    @State private var editing = false
-    private var seekBar: some View {
-        VStack {
-            Slider(value: $seekPosition, in: 0...1) { editing in
-                self.editing = editing
-                // Sliderのボタンを離したときにeditingがfalseになる。
-                // 離したタイミングでにseekする。
-                if !editing {
-                    player.seek(to: seekPosition)
-                }
-            }
-        }
-        .onReceive(player.$currentPosition) {
-            // Sliderのボタンをいじっているときは位置を変更しない。
-            guard !editing else { return }
-            seekPosition = $0
-        }
     }
 }
 

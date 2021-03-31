@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		185BC2281ABCE7538435C981 /* SliderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCF065389628388F90E4C /* SliderBar.swift */; };
 		185BCE645F000E9A4DF9C09F /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCEF37BB48DF4938B0FF8 /* Blur.swift */; };
 		69056AE81FE3C25200370BB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69056AE71FE3C25200370BB6 /* AppDelegate.swift */; };
 		69056AF21FE3C25200370BB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69056AF01FE3C25200370BB6 /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		185BCEF37BB48DF4938B0FF8 /* Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
+		185BCF065389628388F90E4C /* SliderBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderBar.swift; sourceTree = "<group>"; };
 		69056AE41FE3C25200370BB6 /* LocalMusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalMusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69056AE71FE3C25200370BB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69056AF11FE3C25200370BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				699210802598A500007F3DF7 /* PlayerView.swift */,
 				185BCEF37BB48DF4938B0FF8 /* Blur.swift */,
+				185BCF065389628388F90E4C /* SliderBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				69C175E920575B6B008D3E90 /* Player.swift in Sources */,
 				690C8060257646F700481599 /* AlbumListView.swift in Sources */,
 				185BCE645F000E9A4DF9C09F /* Blur.swift in Sources */,
+				185BC2281ABCE7538435C981 /* SliderBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

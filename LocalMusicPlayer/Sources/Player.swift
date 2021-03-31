@@ -12,7 +12,7 @@ final class Player: NSObject, ObservableObject {
     @Published private(set) var artist: String?
     @Published private(set) var artworkImage: UIImage?
     @Published private(set) var playingItem: MPMediaItem?
-    @Published private(set) var currentPosition: Double = 0
+    @Published private(set) var currentPosition: Double = 0 // 0〜1
 
     // NOTE: アルバムのリストなどのデータ表現
     // private(set) var albums: [MPMediaItemCollection]
