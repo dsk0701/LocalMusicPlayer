@@ -10,7 +10,7 @@ struct SliderBar: View {
             Slider(value: $seekPosition, in: 0...1) { editing in
                 self.editing = editing
                 // Sliderのボタンを離したときにeditingがfalseになる。
-                // 離したタイミングでにseekする。
+                // 離したタイミングでseekする。
                 if !editing {
                     player.seek(to: seekPosition)
                 }
