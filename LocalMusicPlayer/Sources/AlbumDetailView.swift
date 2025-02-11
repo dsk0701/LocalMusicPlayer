@@ -25,7 +25,7 @@ struct AlbumDetailView: View {
                             Spacer()
                         }
                     }
-                    ForEach(album.mpMediaItemCollection.items.indices) { index in
+                    ForEach(album.mpMediaItemCollection.items.indices, id: \.self) { index in
                         Button(action: {
                             player.play(items: album.mpMediaItemCollection.items, startIndex: index)
                         }, label: {
