@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,7 @@
 		692B08D9203E3CC3001E6474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692B08D8203E3CC3001E6474 /* Assets.xcassets */; };
 		694BF7F325A3435A00178E60 /* FullScreenPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694BF7F225A3435A00178E60 /* FullScreenPlayerView.swift */; };
 		697890962138BF1B0006803F /* NextSongChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697890952138BF1B0006803F /* NextSongChooser.swift */; };
+		6988B03A2D6C69A800A664D1 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 6988B0392D6C69A800A664D1 /* SwiftFormat */; };
 		699210812598A500007F3DF7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699210802598A500007F3DF7 /* PlayerView.swift */; };
 		69C175E920575B6B008D3E90 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C175E820575B6B008D3E90 /* Player.swift */; };
 		69D855FB1FFDA5380005C298 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69D855FA1FFDA5380005C298 /* Localizable.strings */; };
@@ -48,11 +49,16 @@
 		69ECE6D32580F4D80039ED27 /* AlbumDetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		695051122D6096470085088A /* Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extension; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		69056AE11FE3C25200370BB6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6988B03A2D6C69A800A664D1 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +120,7 @@
 		69D855F41FF32D8F0005C298 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				695051122D6096470085088A /* Extension */,
 				69143489205B511E00C34170 /* Misc */,
 				690C80652576550600481599 /* Row */,
 				692B08D5203D61F4001E6474 /* Views */,
@@ -163,6 +170,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				695051122D6096470085088A /* Extension */,
+			);
 			name = LocalMusicPlayer;
 			productName = LocalMusicPlayer;
 			productReference = 69056AE41FE3C25200370BB6 /* LocalMusicPlayer.app */;
@@ -199,6 +209,9 @@
 				Base,
 			);
 			mainGroup = 69056ADB1FE3C25200370BB6;
+			packageReferences = (
+				6988B0382D6C69A800A664D1 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+			);
 			productRefGroup = 69056AE51FE3C25200370BB6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -367,7 +380,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -383,7 +397,10 @@
 				INFOPLIST_FILE = LocalMusicPlayer/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mixin.LocalMusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -403,7 +420,10 @@
 				INFOPLIST_FILE = LocalMusicPlayer/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = mixin.LocalMusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,6 +455,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6988B0382D6C69A800A664D1 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.55.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6988B0392D6C69A800A664D1 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6988B0382D6C69A800A664D1 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 69056ADC1FE3C25200370BB6 /* Project object */;
 }
