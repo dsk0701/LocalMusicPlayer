@@ -1,5 +1,5 @@
-import UIKit
 import MediaPlayer
+import UIKit
 
 struct AlbumViewModel: Identifiable {
     let id: MPMediaEntityPersistentID

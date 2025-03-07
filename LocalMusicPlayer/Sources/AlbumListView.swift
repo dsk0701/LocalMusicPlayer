@@ -9,7 +9,7 @@ struct AlbumListView: View {
             ScrollView {
                 // 表示されているものだけ読み込むためにLazyStack.
                 LazyVStack(alignment: .leading) {
-                    ForEach(albums) { (album) in
+                    ForEach(albums) { album in
                         // Row内にDividerつけるとタップ時に反応してしまう。
                         // また、Rowの下側につけるとDividerの上下にPaddingついているらしく、下までスクロールすると隙間ができるので上側につけている。
                         Divider()
@@ -27,9 +27,9 @@ struct AlbumListView: View {
                 // Color.clear.padding(.bottom, playerViewHeight)
                 Rectangle().fill(Color.clear).frame(height: playerViewHeight)
             }
-                .navigationTitle(Text("アルバム"))
+            .navigationTitle(Text("アルバム"))
         }
-            .accentColor(Color.orange)
+        .accentColor(Color.orange)
     }
 }
 

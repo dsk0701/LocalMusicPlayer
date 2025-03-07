@@ -1,5 +1,5 @@
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 @main
 struct LocalMusicPlayerApp: App {
@@ -21,9 +21,9 @@ struct LocalMusicPlayerApp: App {
                             FullScreenPlayerView()
                                 .environmentObject(player)
                         }
-                    .onTapGesture {
-                        self.playerIsPresent.toggle()
-                    }
+                        .onTapGesture {
+                            self.playerIsPresent.toggle()
+                        }
                 }
             }
             .onPreferenceChange(PlayerViewPreferenceKey.self) { value in
@@ -40,18 +40,18 @@ struct LocalMusicPlayerApp: App {
 }
 
 /*
-SwiftUIでのシングルトンは、下記のようにする事で実現できる。
+ SwiftUIでのシングルトンは、下記のようにする事で実現できる。
 
-struct SomeView: View {
-    @Environment(\.player) private var player
-}
+ struct SomeView: View {
+     @Environment(\.player) private var player
+ }
 
-struct PlayerKey: EnvironmentKey {
-    // デフォルト値
-    static let defaultValue: Player = Player()
-}
+ struct PlayerKey: EnvironmentKey {
+     // デフォルト値
+     static let defaultValue: Player = Player()
+ }
 
-extension EnvironmentValues {
-    var player: Player { self[PlayerKey.self] }
-}
-*/
+ extension EnvironmentValues {
+     var player: Player { self[PlayerKey.self] }
+ }
+ */

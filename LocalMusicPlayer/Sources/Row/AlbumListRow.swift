@@ -8,13 +8,13 @@ struct AlbumListRow: View {
     var body: some View {
         HStack {
             /*
-            if let artwork = album.representativeItem?.artwork, let image = artwork.image(at: artwork.bounds.size) {
-                Image(uiImage: image)
-                    .renderingMode(.original)
-                    .resizable()
-                    .frame(width: 60, height: 60)
-            }
-            */
+             if let artwork = album.representativeItem?.artwork, let image = artwork.image(at: artwork.bounds.size) {
+                 Image(uiImage: image)
+                     .renderingMode(.original)
+                     .resizable()
+                     .frame(width: 60, height: 60)
+             }
+             */
             artworkImage.map {
                 Image(uiImage: $0)
                     .renderingMode(.original)
@@ -33,13 +33,13 @@ struct AlbumListRow: View {
                         .lineLimit(1)
                 }
             }
-                .foregroundColor(.primary)
+            .foregroundColor(.primary)
             Spacer()
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
         }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal)
     }
 }
 
