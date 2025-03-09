@@ -6,7 +6,6 @@ var app: AppDelegate {
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    let player = Player()
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true

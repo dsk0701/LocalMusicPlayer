@@ -1,41 +1,118 @@
 import SwiftUI
 
 struct FullScreenPlayerView: View {
-    @Environment(\.presentationMode) var presentationMode
-    @GestureState private var dragOffset = CGSize.zero
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var player: Player
-    private let dissmissThreshold: CGFloat = 100.0
+
+    @State private var eraseOuted = false
+    @State private var dragOffsetY: CGFloat = .zero
+    private let dissmissThreshold: CGFloat = UIScreen.main.bounds.height / 3
 
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            SliderBar()
-                .padding()
-                .accentColor(.orange)
+            // TODO: レイアウト作成中
+            player.title.map {
+                Text($0)
+                    .foregroundColor(Color.white)
+                    .font(.headline)
+                    .lineLimit(1)
+            }
+            player.artist.map {
+                Text($0)
+                    .foregroundColor(Color.white)
+                    .font(.caption)
+                    .lineLimit(1)
+            }
+            player.artworkImage.map {
+                Image(uiImage: $0)
+                    .renderingMode(.original)
+                    .resizable()
+                    .scaledToFit()
+            }
+            PlayerControlBar()
+            SliderBar(player: player)
+            Button(action: {
+                dismiss()
+            }, label: {
+                Text("閉じる")
+            })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .edgesIgnoringSafeArea(.all)
-        .offset(x: 0, y: dragOffset.height)
-        .animation(.easeOut)
+        .padding()
+        .background(BackgroundView(referenceImage: player.artworkImage))
+        .cornerRadius(20)
+        .ignoresSafeArea(edges: [.bottom])
+        .background(TransparentBackgroundView())
+        .offset(y: dragOffsetY)
         .gesture(
             DragGesture()
-                // dragOffsetはドラッグ終了で0,0に戻る
-                .updating($dragOffset, body: { (value, state, transaction) in
-                    guard value.translation.height > 0 else { return }
-                    state = value.translation
-                })
-                .onEnded { (value) in
-                    if value.translation.height > dissmissThreshold {
-                        presentationMode.wrappedValue.dismiss()
+                .onChanged { value in
+                    if value.translation.height < 0 {
+                        dragOffsetY = 0
+                    } else {
+                        dragOffsetY = value.translation.height
                     }
-                    print("value.translation.height: \(value.translation.height)")
+                }
+                .onEnded { value in
+                    if value.translation.height > dissmissThreshold {
+                        dismiss()
+                    } else {
+                        withAnimation(.linear(duration: 0.10)) {
+                            dragOffsetY = 0
+                        }
+                    }
                 }
         )
     }
 }
 
+private struct BackgroundView: View {
+    let referenceImage: UIImage?
+
+    // 未使用。実装参考のため残しています。
+    var brandColor: Color? {
+        guard let uiColor = referenceImage?.getBrandColor() else { return nil }
+        return Color(uiColor: uiColor)
+    }
+
+    var averageColor: Color? {
+        guard let uiColor = referenceImage?.getAverageColor() else { return nil }
+        return Color(uiColor: uiColor)
+    }
+
+    public var body: some View {
+        let fromColor = Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 1.0)
+        let toColor = Color(red: 0, green: 0, blue: 0, opacity: 1.0)
+        LinearGradient(
+            gradient: Gradient(colors: [averageColor ?? fromColor, toColor]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+}
+
+// 下スワイプで閉じる際、sheetのように背景透過させるための記述
+private struct TransparentBackgroundView: UIViewRepresentable {
+    func makeUIView(context _: Context) -> UIView {
+        let view = UIView()
+        Task { @MainActor in
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
+    }
+
+    func updateUIView(_: UIView, context _: Context) {}
+}
+
 struct FullScreenPlayerView_Previews: PreviewProvider {
     static var previews: some View {
         FullScreenPlayerView()
+            .environmentObject(
+                Player(
+                    title: "タイトル",
+                    artist: "アーティスト",
+                    artworkImage: UIImage(named: "AlbumImage")
+                )
+            )
     }
 }
