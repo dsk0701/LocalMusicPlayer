@@ -29,12 +29,15 @@ struct FullScreenPlayerView: View {
                     .resizable()
                     .scaledToFit()
             }
-            PlayerControlBar()
+            PlayerControlBar(player: player)
+                .frame(maxWidth: .infinity, maxHeight: 30)
             SliderBar(player: player)
             Button(action: {
                 dismiss()
             }, label: {
-                Text("閉じる")
+                Image(systemName: "xmark")
+                    .font(.title)
+                    .foregroundColor(Color.white)
             })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
