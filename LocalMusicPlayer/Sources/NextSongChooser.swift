@@ -25,20 +25,21 @@ class NextSongChooser {
         // 再生している曲がアルバム最後の曲の場合はnilを返却。
         Log.d("albumTrackNumber: \(nowPlayingItem.albumTrackNumber)")
         Log.d("albumTrackCount: \(nowPlayingItem.albumTrackCount)")
-        guard nowPlayingItem.albumTrackNumber < nowPlayingItem.albumTrackCount else { return nil }
         let predicate = MPMediaPropertyPredicate(
             value: nowPlayingItem.albumTitle,
             forProperty: MPMediaItemPropertyAlbumTitle,
-            comparisonType: MPMediaPredicateComparison.equalTo
+            comparisonType: .equalTo
         )
         let query = MPMediaQuery(filterPredicates: [predicate])
+        // nowPlayingItem.albumTrackCount でアルバムの曲数が取得できなかったので、クエリでアルバムの曲数を取得しています。
+        guard let albumTrackCount = query.items?.count, nowPlayingItem.albumTrackNumber < albumTrackCount else { return nil }
         return query.items?[nowPlayingItem.albumTrackNumber]
     }
 
     private func getFirstSongOfNextAlbum(nowPlayingItem: MPMediaItem) -> MPMediaItem? {
         // TODO: 引数の曲のアルバムの次のアルバムのはじめの曲を返す。
         // 未実装。とりあえず引数をそのまま返す。
-        return nowPlayingItem
+        nowPlayingItem
     }
 
     /**

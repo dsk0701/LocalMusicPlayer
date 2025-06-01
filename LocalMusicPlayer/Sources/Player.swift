@@ -8,7 +8,6 @@ final class Player: NSObject, ObservableObject {
     }
 
     @Published private(set) var state = State.stop
-    @Published private(set) var playingItem: MPMediaItem?
     @Published private(set) var title: String?
     @Published private(set) var artist: String?
     @Published private(set) var artworkImage: UIImage?
@@ -23,13 +22,15 @@ final class Player: NSObject, ObservableObject {
     private var mediaItems = [MPMediaItem]()
     private var playingItemIndex: Int? {
         didSet {
-            guard let playingItemIndex = playingItemIndex, playingItemIndex < mediaItems.count else { return }
-            let playingItem = mediaItems[playingItemIndex]
-            setNowPlayingInfo(by: playingItem)
-            title = playingItem.title
-            artist = playingItem.artist
-            artworkImage = playingItem.artwork.map { $0.image(at: $0.bounds.size) } ?? nil
-            self.playingItem = playingItem
+            guard let playingItemIndex, playingItemIndex < mediaItems.count else { return }
+            playingItem = mediaItems[playingItemIndex]
+        }
+    }
+
+    private(set) var playingItem: MPMediaItem? {
+        didSet {
+            guard let item = playingItem else { return }
+            setNowPlayingInfo(by: item)
         }
     }
 
@@ -72,32 +73,15 @@ final class Player: NSObject, ObservableObject {
 
     func play(items: [MPMediaItem], startIndex: Int) {
         mediaItems = items
-        playingItemIndex = startIndex
         let playerItems = items
-            .compactMap { $0.assetURL }
+            .compactMap(\.assetURL)
             .map { AVPlayerItem(url: $0) }
         removePeriodicTimeObserver()
-        player = AVQueuePlayer(items: playerItems.dropFirst(startIndex).map { $0 })
+        player = AVQueuePlayer(items: playerItems.dropFirst(startIndex).map(\.self))
         addPeriodicTimeObserver()
         player.play()
+        playingItemIndex = startIndex
         state = .playing
-    }
-
-    private func addPeriodicTimeObserver() {
-        let time = cmTime(seconds: 0.5)
-        timeObserverToken = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] _ in
-            guard let self = self, let currentItemDuration = self.player.currentItem?.duration else { return }
-            self.currentPosition = self.player.currentTime().seconds / currentItemDuration.seconds
-            self.currentTimeText = formatTime(cmTime: self.player.currentTime())
-            self.playbackDurationText = formatTime(cmTime: currentItemDuration)
-        }
-    }
-
-    private func removePeriodicTimeObserver() {
-        if let timeObserverToken = timeObserverToken {
-            player.removeTimeObserver(timeObserverToken)
-            self.timeObserverToken = nil
-        }
     }
 
     func seek(to position: Double) {
@@ -111,14 +95,33 @@ final class Player: NSObject, ObservableObject {
         }
     }
 
+    func nextTrack() {
+        // 再生リストの最後だったら停止する。表示は１曲目。
+        guard let currentIndex = playingItemIndex else { return }
+        let nextIndex = currentIndex + 1
+        if nextIndex < mediaItems.count {
+            // 次の曲を再生
+            play(items: mediaItems, startIndex: nextIndex)
+        } else {
+            // TODO: やりたいこととしては、自動で次の再生リストを作成して再生したい。
+            reset()
+        }
+    }
+
+    func reset() {
+        // 再生リストの１曲目に戻って pause する。
+        play(items: mediaItems, startIndex: 0)
+        _ = pause()
+    }
+
     @objc func resumeOrPause() -> MPRemoteCommandHandlerStatus {
         switch state {
         case .playing:
-            return pause()
+            pause()
         case .pause:
-            return resume()
+            resume()
         default:
-            return .commandFailed
+            .commandFailed
         }
     }
 
@@ -140,9 +143,12 @@ final class Player: NSObject, ObservableObject {
         return .success
     }
 
-    @objc func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        // TODO:
-        Log.d(event.command)
+    @objc func next() -> MPRemoteCommandHandlerStatus {
+        .noSuchContent
+    }
+
+    @objc func nextTrack(event _: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        nextTrack()
         return .success
     }
 
@@ -179,6 +185,7 @@ final class Player: NSObject, ObservableObject {
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
         commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
         commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(changePlaybackPosition(event:)))
+        // NOTE: 10 秒スキップ（進める・戻す)
         // commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 10)]
         // commandCenter.skipForwardCommand.addTarget(self, action: #selector(skipForward(event:)))
         // commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 10)]
@@ -186,6 +193,16 @@ final class Player: NSObject, ObservableObject {
     }
 
     private func setNowPlayingInfo(by item: MPMediaItem) {
+        title = item.title
+        artist = item.artist
+        artworkImage = item.artwork.map { $0.image(at: $0.bounds.size) } ?? nil
+        playbackDurationText = formatTime(cmTime: cmTime(seconds: item.playbackDuration))
+        setCurrentTime(currentItemDuration: item.playbackDuration)
+
+        setNowPlayingInfoCenter(by: item)
+    }
+
+    private func setNowPlayingInfoCenter(by item: MPMediaItem) {
         var nowPlayingInfo = [String: Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = item.title
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = item.albumTitle
@@ -197,8 +214,27 @@ final class Player: NSObject, ObservableObject {
     @objc func didFinishPlayingItem() {
         // addObserverしたスレッドと別スレッドで実行されるかもしれないのでメインスレッドに切り替える.
         DispatchQueue.main.async { [weak self] in
-            guard let prevIndex = self?.playingItemIndex else { return }
-            self?.playingItemIndex = prevIndex + 1
+            self?.nextTrack()
+        }
+    }
+
+    private func addPeriodicTimeObserver() {
+        let time = cmTime(seconds: 0.5)
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] _ in
+            guard let self, let currentItemDuration = playingItem?.playbackDuration else { return }
+            setCurrentTime(currentItemDuration: currentItemDuration)
+        }
+    }
+
+    private func setCurrentTime(currentItemDuration: TimeInterval) {
+        currentPosition = player.currentTime().seconds / currentItemDuration
+        currentTimeText = formatTime(cmTime: player.currentTime())
+    }
+
+    private func removePeriodicTimeObserver() {
+        if let timeObserverToken {
+            player.removeTimeObserver(timeObserverToken)
+            self.timeObserverToken = nil
         }
     }
 

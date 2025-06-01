@@ -29,6 +29,7 @@ struct FullScreenPlayerView: View {
                     .resizable()
                     .scaledToFit()
             }
+            Spacer()
             PlayerControlBar(player: player)
                 .frame(maxWidth: .infinity, maxHeight: 30)
             SliderBar(player: player)
@@ -39,6 +40,10 @@ struct FullScreenPlayerView: View {
                     .font(.title)
                     .foregroundColor(Color.white)
             })
+            let bottomInset = (UIApplication.shared.connectedScenes.first { $0 is UIWindowScene } as? UIWindowScene)?
+                .windows.first?.safeAreaInsets.bottom ?? 0
+            Color.clear
+                .frame(height: bottomInset)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()

@@ -26,7 +26,7 @@ struct PlayerControlBar: View {
 
             // 早送り（.infinityで均等配置）
             PlayerButton(systemName: "forward.end.alt.fill") {
-                _ = {}
+                player.nextTrack()
             }
             .frame(maxWidth: .infinity)
         }
