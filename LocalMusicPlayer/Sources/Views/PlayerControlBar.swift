@@ -6,43 +6,26 @@ struct PlayerControlBar: View {
     var body: some View {
         HStack {
             // 巻き戻し（.infinityで均等配置）
-            PlayerButton(systemName: "backward.end.alt.fill") {
+            BackwardButton {
+                // TODO: 巻き戻し
                 _ = {}
             }
             .frame(maxWidth: .infinity)
 
             // 再生・一時停止（.infinityで均等配置）
-            let playOrPauseButton = switch player.state {
-            case .playing:
-                PlayerButton(systemName: "pause.fill") {
-                    _ = player.pause()
-                }
-            default:
-                PlayerButton(systemName: "play.fill") {
-                    _ = player.resume()
-                }
-            }
-            playOrPauseButton.frame(maxWidth: .infinity)
+            ResumePauseButton(
+                playerState: player.state,
+                playAction: { _ = player.resume() },
+                pauseAction: { _ = player.pause() }
+            )
+            .frame(maxWidth: .infinity)
 
             // 早送り（.infinityで均等配置）
-            PlayerButton(systemName: "forward.end.alt.fill") {
+            ForwardButton {
                 player.nextTrack()
             }
             .frame(maxWidth: .infinity)
         }
-    }
-}
-
-struct PlayerButton: View {
-    let systemName: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action, label: {
-            Image(systemName: systemName)
-                .font(.largeTitle)
-                .foregroundColor(.white)
-        })
     }
 }
 

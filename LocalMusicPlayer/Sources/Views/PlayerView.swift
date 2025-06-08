@@ -26,20 +26,13 @@ struct PlayerView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    Button(action: {
-                        _ = player.resumeOrPause()
-                    }, label: {
-                        switch player.state {
-                        case .playing:
-                            Image(systemName: "pause.fill")
-                                .resizable()
-                                .foregroundColor(.orange)
-                        default:
-                            Image(systemName: "play.fill")
-                                .resizable()
-                                .foregroundColor(.orange)
-                        }
-                    })
+
+                    ResumePauseButton(
+                        color: .orange,
+                        playerState: player.state,
+                        playAction: { _ = player.resume() },
+                        pauseAction: { _ = player.pause() }
+                    )
                     .frame(maxWidth: 30, maxHeight: 30)
                 }
                 .padding(.vertical, 8)
