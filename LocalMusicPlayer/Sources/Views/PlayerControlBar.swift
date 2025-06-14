@@ -7,8 +7,7 @@ struct PlayerControlBar: View {
         HStack {
             // 巻き戻し（.infinityで均等配置）
             BackwardButton {
-                // TODO: 巻き戻し
-                _ = {}
+                player.previousTrack()
             }
             .frame(maxWidth: .infinity)
 

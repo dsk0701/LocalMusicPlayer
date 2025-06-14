@@ -91,7 +91,12 @@ final class Player: NSObject, ObservableObject {
         // そうしないと通知が止まらず画面のSeek位置が一瞬もとに戻ってしまう。
         removePeriodicTimeObserver()
         player.seek(to: cmTime(seconds: time)) { [weak self] _ in
-            self?.addPeriodicTimeObserver()
+            guard let self else { return }
+            addPeriodicTimeObserver()
+
+            if let item = playingItem {
+                setNowPlayingInfo(by: item)
+            }
         }
     }
 
@@ -105,6 +110,19 @@ final class Player: NSObject, ObservableObject {
         } else {
             // TODO: やりたいこととしては、自動で次の再生リストを作成して再生したい。
             reset()
+        }
+    }
+
+    func previousTrack() {
+        // 再生中の曲が 5 秒以上経っていたら頭出し
+        if player.currentTime().seconds > 5 {
+            seek(to: 0)
+        } else {
+            guard let currentIndex = playingItemIndex else { return }
+            let previousIndex = currentIndex - 1
+            if previousIndex < 0 { return }
+            // 前の曲を再生
+            play(items: mediaItems, startIndex: previousIndex)
         }
     }
 
@@ -152,9 +170,8 @@ final class Player: NSObject, ObservableObject {
         return .success
     }
 
-    @objc func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        // TODO:
-        Log.d(event.command)
+    @objc func previousTrack(event _: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        previousTrack()
         return .success
     }
 
@@ -208,7 +225,13 @@ final class Player: NSObject, ObservableObject {
         nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = item.albumTitle
         nowPlayingInfo[MPMediaItemPropertyArtwork] = item.artwork
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.playbackDuration
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+
+    private func setCurrentTime(currentItemDuration: TimeInterval) {
+        currentPosition = player.currentTime().seconds / currentItemDuration
+        currentTimeText = formatTime(cmTime: player.currentTime())
     }
 
     @objc func didFinishPlayingItem() {
@@ -224,11 +247,6 @@ final class Player: NSObject, ObservableObject {
             guard let self, let currentItemDuration = playingItem?.playbackDuration else { return }
             setCurrentTime(currentItemDuration: currentItemDuration)
         }
-    }
-
-    private func setCurrentTime(currentItemDuration: TimeInterval) {
-        currentPosition = player.currentTime().seconds / currentItemDuration
-        currentTimeText = formatTime(cmTime: player.currentTime())
     }
 
     private func removePeriodicTimeObserver() {
