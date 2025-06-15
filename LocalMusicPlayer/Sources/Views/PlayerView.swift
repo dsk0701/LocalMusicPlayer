@@ -7,12 +7,16 @@ struct PlayerView: View {
         GeometryReader { geo in
             VStack {
                 HStack {
-                    player.artworkImage.map {
-                        Image(uiImage: $0)
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                    }
+                    ResumePauseButton(
+                        color: .orange,
+                        playerState: player.state,
+                        playAction: { _ = player.resume() },
+                        pauseAction: { _ = player.pause() }
+                    )
+                    .frame(maxWidth: 30, maxHeight: 30)
+
+                    Spacer().frame(width: 16)
+
                     VStack(alignment: .leading) {
                         player.title.map {
                             Text($0)
@@ -27,13 +31,12 @@ struct PlayerView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    ResumePauseButton(
-                        color: .orange,
-                        playerState: player.state,
-                        playAction: { _ = player.resume() },
-                        pauseAction: { _ = player.pause() }
-                    )
-                    .frame(maxWidth: 30, maxHeight: 30)
+                    player.artworkImage.map {
+                        Image(uiImage: $0)
+                            .renderingMode(.original)
+                            .resizable()
+                            .scaledToFit()
+                    }
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
