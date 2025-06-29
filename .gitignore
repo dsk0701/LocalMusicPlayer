@@ -70,9 +70,11 @@ fastlane/screenshots
 # Bundle
 vendor/
 
-# AI
-.cursor/
-
 # xcode-build-server
 buildServer.json
+
+# AI
+.cursor/
+.claude/
+CLAUDE.md
 
