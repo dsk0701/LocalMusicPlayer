@@ -1,5 +1,6 @@
 import SwiftUI
 
+// SF Symbols の名称を指定してボタンを作成するボタンです
 struct IconButton: View {
     let systemName: String
     let color: Color
