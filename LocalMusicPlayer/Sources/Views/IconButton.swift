@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PlayerButton: View {
+struct IconButton: View {
     let systemName: String
     let color: Color
     let action: () -> Void
