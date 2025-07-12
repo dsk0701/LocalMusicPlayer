@@ -3,3 +3,11 @@
 "Top.Menu.Artist" = "アーティスト";
 "Top.Menu.Playlist" = "プレイリスト";
 
+"MusicPermission.Title" = "音楽ライブラリへのアクセス";
+"MusicPermission.Description" = "このアプリはデバイスの音楽ライブラリにアクセスして音楽を再生します。";
+"MusicPermission.Loading" = "確認中...";
+"MusicPermission.AllowAccess" = "アクセスを許可";
+"MusicPermission.AccessDenied" = "アクセスが拒否されました";
+"MusicPermission.SettingsHelp" = "アプリを使用するには設定アプリでアクセスを許可してください";
+"MusicPermission.OpenSettings" = "設定アプリを開く";
+

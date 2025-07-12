@@ -21,7 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string></string>
+	<string>このアプリはデバイスの音楽ライブラリにアクセスして、アルバムとトラックを再生します。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
